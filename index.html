@@ -318,8 +318,8 @@ p,.creed-body,.ob-sub,.tier .desc,.event .desc,.member-card .field,.empty-state,
 /* ---------- SUPABASE CONFIG — paste your two values here ----------
    Supabase dashboard -> Project Settings -> API
    With these blank, the app runs in demo mode (nothing saved). */
-const SUPABASE_URL = '';        // e.g. 'https://abcdefgh.supabase.co'
-const SUPABASE_ANON_KEY = '';   // the long 'anon public' key — safe to expose in frontend code
+const SUPABASE_URL = 'https://owhmdjduknrulahkhnhm.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_ASFbRsZJ2CrVKaf7n62Ylg_ywn0rOzV';
 const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
