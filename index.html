@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solei — at home, anywhere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alice&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFFFF;
+  --paper-raised:#FAFAF9;
+  --ink:#000000;
+  --ink-soft:#000000;
+  --ink-faint:#000000;
+  --line:#E7E6E2;
+  --marigold:#DF5198;
+  --marigold-soft:#FBE3F0;
+  --night:#141C2B;
+  --night-line:#2A3550;
+  --night-text:#B9C3D8;
+  --serif:'Alice',Georgia,serif;
+  --sans:'Host Grotesk',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --gsans:'Google Sans','Host Grotesk',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.4;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.eyebrow .tick{color:var(--marigold)}
+
+/* ---------- shell ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px)}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:8px}
+.wordmark{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.22em;margin-right:auto;display:flex;align-items:baseline;gap:10px;background:none;border:none;color:var(--ink)}
+.logo-img{height:26px;display:block}
+.tab{background:none;border:none;font-size:14px;font-weight:500;color:var(--ink-soft);padding:8px 12px;border-radius:20px;transition:color .15s,background .15s}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);background:#F0EFEC}
+.tab:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+main{max-width:1180px;margin:0 auto;padding:0 24px 120px}
+.view{display:none}
+.view.active{display:block;animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- welcome ---------- */
+#view-welcome{padding-top:72px}
+h1.hero{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,68px);line-height:1.05;letter-spacing:-.008em;max-width:15ch}
+h1.hero em{font-style:italic;color:var(--marigold)}
+.creed-body{max-width:560px;margin-top:30px;color:var(--ink-soft);font-size:17px}
+.creed-body p+p{margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border:none;border-radius:28px;padding:14px 26px;font-size:15px;font-weight:500;transition:transform .15s,background .15s}
+.btn:hover{background:#2A3448;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn.ghost:hover{background:#F0EFEC}
+.btn-row{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap}
+.hero-cols{display:flex;gap:56px;align-items:center}
+.hero-left{flex:1;min-width:300px}
+.hero-img{width:min(38%,440px);border-radius:18px;object-fit:cover}
+@media (max-width:900px){.hero-cols{flex-direction:column;align-items:flex-start}.hero-img{width:100%;max-width:480px}}
+.welcome-foot{margin-top:72px;display:flex;gap:40px;flex-wrap:wrap}
+.foot-stat .n{font-family:var(--serif);font-size:26px}
+.foot-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- onboarding ---------- */
+#view-onboarding{min-height:calc(100vh - 60px);display:none;flex-direction:column}
+#view-onboarding.active{display:flex}
+.ob-progress{height:2px;background:var(--line);margin:0 -24px}
+.ob-progress i{display:block;height:100%;background:var(--marigold);width:0;transition:width .35s ease}
+.ob-stage{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:680px;width:100%;margin:0 auto;padding:48px 0}
+.ob-movement{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--marigold);margin-bottom:18px}
+.ob-q{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);line-height:1.18;margin-bottom:10px}
+.ob-sub{color:var(--ink-soft);margin-bottom:26px;font-size:15px}
+.ob-input textarea, .ob-input input[type=text]{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);font-family:var(--sans);font-size:18px;line-height:1.6;color:var(--ink);padding:8px 0;resize:none}
+.ob-input textarea{min-height:120px}
+.ob-input textarea:focus,.ob-input input:focus{border-bottom-color:var(--ink);outline:none}
+.req-star{color:var(--marigold);margin-left:6px;font-family:var(--serif)}
+.charcount{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-left:auto}
+.ac-wrap{position:relative}
+.ac-list{position:absolute;top:100%;left:0;right:0;background:var(--paper-raised);border:1px solid var(--line);border-radius:0 0 12px 12px;max-height:230px;overflow-y:auto;z-index:30;box-shadow:0 12px 30px rgba(28,37,50,.1)}
+.ac-list button{display:flex;justify-content:space-between;gap:12px;width:100%;background:none;border:none;padding:11px 14px;font-family:var(--sans);font-size:15px;color:var(--ink);text-align:left}
+.ac-list button:hover,.ac-list button.hl{background:var(--marigold-soft)}
+.ac-list button .ctry{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+.pledge-row{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);max-width:320px;padding-bottom:6px}
+.pledge-row .cur{font-family:var(--serif);font-size:30px;color:var(--ink-soft)}
+.pledge-row input{border:none;background:transparent;font-family:var(--serif);font-size:38px;width:100%;color:var(--ink)}
+.pledge-row input:focus{outline:none}
+.pledge-row .per{font-family:var(--mono);font-size:12px;color:var(--ink-soft);white-space:nowrap}
+.ob-meta{display:flex;align-items:center;gap:16px;margin-top:14px;min-height:20px}
+.saved{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.08em;opacity:0;transition:opacity .3s}
+.saved.show{opacity:1}
+.ob-nav{display:flex;align-items:center;gap:14px;padding:24px 0 48px;max-width:680px;width:100%;margin:0 auto}
+.ob-count{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-left:auto}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:8px}
+.tier{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--paper-raised);text-align:left;transition:border-color .15s,transform .15s}
+.tier:hover{transform:translateY(-2px)}
+.tier.sel{border-color:var(--marigold);box-shadow:0 0 0 1px var(--marigold)}
+.tier .amt{font-family:var(--serif);font-size:26px}
+.tier .amt span{font-size:13px;font-family:var(--mono);color:var(--ink-soft)}
+.tier .name{font-weight:600;margin:6px 0 4px}
+.tier .desc{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+
+/* ---------- profile ---------- */
+.section-head{display:flex;align-items:baseline;gap:16px;margin:56px 0 22px}
+.section-head h2{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15}
+.section-head .rule{height:1px;flex:1;background:var(--line)}
+.profile-hero{padding-top:56px;display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap}
+.avatar{width:104px;height:104px;border-radius:50%;background:var(--night);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:38px;flex-shrink:0}
+.profile-hero h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,42px);line-height:1.08}
+.profile-hero .whereline{margin-top:8px}
+.answer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.answer{background:var(--paper-raised);border:1px solid var(--line);border-radius:14px;padding:22px}
+.answer .q{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--marigold);margin-bottom:10px;line-height:1.5}
+.answer .a{font-size:15px;line-height:1.55;white-space:pre-wrap}
+.empty-state{border:1px dashed var(--line);border-radius:16px;padding:60px 30px;text-align:center;color:var(--ink-soft);margin-top:56px}
+.empty-state .btn{margin-top:20px}
+
+/* ---------- life map ---------- */
+.lifemap-wrap{background:var(--paper-raised);border:1px solid var(--line);border-radius:16px;padding:26px 26px 18px;overflow-x:auto}
+.lifemap-wrap svg{display:block;min-width:640px;width:100%}
+.stint-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:end}
+.stint-form label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.stint-form input{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:14px;color:var(--ink)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.legend .chip{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-soft)}
+.legend .dot{width:9px;height:9px;border-radius:50%}
+
+/* ---------- world map ---------- */
+.map-shell{background:var(--night);border-radius:18px;padding:10px;margin-top:26px}
+.map-toolbar{display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
+.map-toolbar .eyebrow{color:var(--night-text)}
+.seg{display:flex;border:1px solid var(--night-line);border-radius:20px;overflow:hidden}
+.seg button{background:transparent;border:none;color:var(--night-text);font-family:var(--mono);font-size:12px;padding:8px 16px;letter-spacing:.06em}
+.seg button.on{background:var(--marigold);color:var(--night)}
+.map-toolbar input[type=date]{background:transparent;border:1px solid var(--night-line);color:var(--night-text);border-radius:8px;padding:7px 10px;font-family:var(--mono);font-size:12px;color-scheme:dark}
+#worldmap{display:block;width:100%}
+.city-dot{cursor:pointer}
+.city-dot circle.core{fill:var(--marigold)}
+.city-dot circle.halo{fill:var(--marigold);opacity:.18}
+.city-dot text{fill:var(--night-text);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.city-dot text.count{fill:var(--marigold);font-size:10px}
+.city-dot:hover circle.halo{opacity:.35}
+.map-panel{padding:8px 16px 16px}
+.map-panel-head{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--night-text);padding:10px 0;border-top:1px solid var(--night-line)}
+.map-members{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.mm-card{background:#1A2436;border:1px solid var(--night-line);border-radius:12px;padding:14px;color:var(--night-text);cursor:pointer;transition:border-color .15s;text-align:left;font-family:var(--sans)}
+.mm-card:hover{border-color:var(--marigold)}
+.mm-card .nm{color:#EDEFF4;font-weight:600;font-size:14.5px}
+.mm-card .fd{font-size:12.5px;color:var(--night-text)}
+.mm-card .dt{font-family:var(--mono);font-size:10.5px;color:var(--marigold);margin-top:8px;letter-spacing:.06em}
+
+/* ---------- members ---------- */
+.member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:26px}
+.member-card{background:var(--paper-raised);border:1px solid var(--line);border-radius:16px;padding:22px;cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;font-family:var(--sans)}
+.member-card:hover{transform:translateY(-3px);border-color:var(--ink-faint)}
+.member-card .mini-avatar{width:46px;height:46px;border-radius:50%;background:var(--night);color:var(--paper);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;margin-bottom:14px}
+.member-card h3{font-family:var(--serif);font-weight:500;font-size:20px}
+.member-card .field{color:var(--ink-soft);font-size:14px;margin-top:2px}
+.member-card .thinking{font-size:14px;margin-top:12px;line-height:1.55;font-style:italic;color:var(--ink)}
+.member-card .where{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--marigold);margin-top:14px}
+
+
+/* ---------- intro modal ---------- */
+.modal-back{position:fixed;inset:0;background:rgba(20,28,43,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-back.open{display:flex}
+.modal{background:var(--paper);border-radius:20px;max-width:520px;width:100%;padding:32px;position:relative;animation:fadeUp .3s ease both}
+.modal .close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;color:var(--ink-soft);line-height:1}
+.modal .close:hover{color:var(--ink)}
+.modal textarea{width:100%;border:1px solid var(--line);background:var(--paper-raised);border-radius:12px;padding:14px;font-family:var(--sans);font-size:15px;line-height:1.6;color:var(--ink);min-height:110px;resize:vertical;margin-top:16px}
+.modal textarea:focus{outline:none;border-color:var(--ink)}
+.modal .expect{font-size:13.5px;color:var(--ink-soft);background:var(--marigold-soft);border-radius:10px;padding:12px 14px;margin-top:14px;line-height:1.55}
+
+/* ---------- events ---------- */
+.event-list{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.event{display:flex;gap:24px;align-items:center;background:var(--paper-raised);border:1px solid var(--line);border-radius:16px;padding:22px 26px;flex-wrap:wrap}
+.event .date-block{font-family:var(--mono);text-align:center;min-width:64px}
+.event .date-block .d{font-family:var(--serif);font-size:30px;line-height:1}
+.event .date-block .m{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--marigold)}
+.event .body{flex:1;min-width:240px}
+.event h3{font-family:var(--serif);font-weight:500;font-size:21px}
+.event .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-soft);margin-top:5px}
+.event .desc{font-size:14.5px;color:var(--ink-soft);margin-top:8px;max-width:56ch}
+.event .cap{font-family:var(--mono);font-size:11px;color:var(--marigold)}
+.luma-note{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-top:20px;letter-spacing:.06em}
+
+p,.creed-body,.ob-sub,.tier .desc,.event .desc,.member-card .field,.empty-state,.modal .expect,.mm-card .fd,.member-card .thinking{font-family:var(--gsans)}
+@media (max-width:640px){
+  .nav-inner{padding:0 14px;overflow-x:auto}
+  main{padding:0 16px 100px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <button class="wordmark" onclick="go('welcome')"><img src="https://images.squarespace-cdn.com/content/v1/6772c2bc359ece646b2aff6a/8b178a71-72e3-407c-b535-83253815abea/logo_solei_full.png?format=1500w" alt="Solei" class="logo-img"></button>
+    <button class="tab" data-v="map" onclick="go('map')">Map</button>
+    <button class="tab" data-v="members" onclick="go('members')">Members</button>
+    <button class="tab" data-v="events" onclick="go('events')">Events</button>
+    <button class="tab" data-v="profile" onclick="go('profile')">Your profile</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ WELCOME ============ -->
+<section id="view-welcome" class="view active">
+  <div class="hero-cols">
+  <div class="hero-left">
+  <h1 class="hero">For the restless.<br>For those <em>at home, anywhere.</em></h1>
+  <div class="creed-body">
+    <p>A community of people who move through the world on purpose — founders and curators, scientists and diplomats, novelists and operators. United not by industry, but by character: ambition, restlessness, and the habit of forever learning.</p>
+    <p>Admission is not a form. It is a ritual: fifteen questions that ask how you think, how you spend your time, and how you move. Those who love answering them tend to belong here.</p>
+  </div>
+  <div class="btn-row">
+    <button class="btn" onclick="startOnboarding()">Begin the ritual → <span style="font-family:var(--mono);font-size:11px;opacity:.7">~25 min</span></button>
+    <button class="btn ghost" onclick="go('map')">See who's where</button>
+  </div>
+  </div>
+  <img class="hero-img" src="https://images.squarespace-cdn.com/content/v1/6772c2bc359ece646b2aff6a/f701f649-877f-4fb9-8345-bf8a142f725e/image-thirdhaus.png?format=1500w" alt="Solei">
+  </div>
+  <div class="welcome-foot">
+    <div class="foot-stat"><div class="n" id="stat-members">—</div><div class="l">Members</div></div>
+    <div class="foot-stat"><div class="n" id="stat-cities">—</div><div class="l">Cities today</div></div>
+    <div class="foot-stat"><div class="n" id="stat-events">—</div><div class="l">Upcoming gatherings</div></div>
+  </div>
+</section>
+
+<!-- ============ ONBOARDING ============ -->
+<section id="view-onboarding" class="view">
+  <div class="ob-progress"><i id="ob-bar"></i></div>
+  <div class="ob-stage" id="ob-stage"></div>
+  <div class="ob-nav">
+    <button class="btn ghost" id="ob-back" onclick="obPrev()">← Back</button>
+    <button class="btn" id="ob-next" onclick="obNext()">Continue</button>
+    <span class="ob-count" id="ob-count"></span>
+  </div>
+</section>
+
+<!-- ============ PROFILE ============ -->
+<section id="view-profile" class="view"><div id="profile-root"></div></section>
+
+<!-- ============ MAP ============ -->
+<section id="view-map" class="view">
+  <div class="profile-hero" style="padding-top:56px">
+    <div>
+      <span class="eyebrow"><span class="tick">◆</span>&nbsp;The night chart</span>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,42px);line-height:1.08;margin-top:10px">Who is where</h2>
+      <p style="color:var(--ink-soft);max-width:52ch;margin-top:8px">City-level only, always. Filter by today or any future date to find your people before you land.</p>
+    </div>
+  </div>
+  <div class="map-shell">
+    <div class="map-toolbar">
+      <span class="eyebrow">Show members on</span>
+      <div class="seg">
+        <button id="seg-today" class="on" onclick="setMapToday()">TODAY · JUL 11</button>
+        <button id="seg-date" onclick="document.getElementById('map-date').showPicker?document.getElementById('map-date').showPicker():document.getElementById('map-date').focus()">PICK A DATE</button>
+      </div>
+      <input type="date" id="map-date" value="2026-07-11" onchange="setMapDate(this.value)">
+    </div>
+    <svg id="worldmap" viewBox="0 0 1000 520" role="img" aria-label="World map of member locations"></svg>
+    <div class="map-panel">
+      <div class="map-panel-head" id="map-panel-head">SELECT A CITY</div>
+      <div class="map-members" id="map-members"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEMBERS ============ -->
+<section id="view-members" class="view">
+  <div class="profile-hero" style="padding-top:56px">
+    <div>
+      <span class="eyebrow"><span class="tick">◆</span>&nbsp;The room</span>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,42px);line-height:1.08;margin-top:10px">Members</h2>
+      <p style="color:var(--ink-soft);max-width:52ch;margin-top:8px">Experts in their own fields, restless in every one of them. Tap a profile to see how they think — and where they've been.</p>
+    </div>
+  </div>
+  <div class="member-grid" id="member-grid"></div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section id="view-events" class="view">
+  <div class="profile-hero" style="padding-top:56px">
+    <div>
+      <span class="eyebrow"><span class="tick">◆</span>&nbsp;Gatherings</span>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,42px);line-height:1.08;margin-top:10px">Small rooms, everywhere</h2>
+      <p style="color:var(--ink-soft);max-width:52ch;margin-top:8px">Dinners of eight. Salons of fifteen. Popup cities of forty. Contribution is 随喜 — give as you're moved to.</p>
+    </div>
+  </div>
+  <div class="event-list" id="event-list"></div>
+  <div class="luma-note">◆ PROTOTYPE — production version syncs this list from your lu.ma calendar via the Luma API</div>
+</section>
+
+<!-- ============ MEMBER (full page) ============ -->
+<section id="view-member" class="view"><div id="member-root"></div></section>
+
+</main>
+
+<!-- ============ INTRO REQUEST MODAL ============ -->
+<div class="modal-back" id="intro-back" onclick="if(event.target===this)closeIntro()">
+  <div class="modal"><button class="close" onclick="closeIntro()" aria-label="Close">×</button><div id="intro-body"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =====================================================
+   SOLEI — prototype
+   All data lives in memory. Production: Supabase + Stripe
+   + Mapbox + Luma API. No localStorage by design.
+===================================================== */
+
+/* ---------- SUPABASE CONFIG — paste your two values here ----------
+   Supabase dashboard -> Project Settings -> API
+   With these blank, the app runs in demo mode (nothing saved). */
+const SUPABASE_URL = '';        // e.g. 'https://abcdefgh.supabase.co'
+const SUPABASE_ANON_KEY = '';   // the long 'anon public' key — safe to expose in frontend code
+const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+async function saveDraft(status){
+  if(!sb) return true; // demo mode
+  const payload = {
+    id: state.appId,
+    status: status || 'draft',
+    full_name: state.answers[0] || null,
+    email: state.answers[1] || null,
+    birthdate: state.answers[2] || null,
+    current_city: state.answers[3] || null,
+    answers: state.answers,
+    pledge: state.pledge,
+    stints: state.myStints,
+    updated_at: new Date().toISOString()
+  };
+  const {error} = await sb.from('applications').upsert(payload);
+  if(error){ console.error('Supabase save failed:', error.message); return false; }
+  return true;
+}
+
+const TODAY = new Date('2026-07-11T12:00:00');
+
+/* ---------- city registry: projected coords (equirect 1000x500, +10 pad) & global colors ---------- */
+const CITIES = {
+  'New York':    {x:294,y:147,color:'#3B6EA8'},
+  'Los Angeles': {x:172,y:166,color:'#D9779C'},
+  'Phoenix':     {x:189,y:167,color:'#C25E4C'},
+  'Mexico City': {x:225,y:206,color:'#7A8B4E'},
+  'Buenos Aires':{x:338,y:356,color:'#8C5FA8'},
+  'London':      {x:500,y:117,color:'#4B8A8C'},
+  'Lisbon':      {x:475,y:153,color:'#D9A13B'},
+  'Paris':       {x:506,y:124,color:'#5E7ABF'},
+  'Berlin':      {x:537,y:114,color:'#6B7F4E'},
+  'Helsinki':    {x:569,y:93, color:'#8E7CC3'},
+  'Nairobi':     {x:602,y:264,color:'#B96A3B'},
+  'Dubai':       {x:654,y:190,color:'#B08A3E'},
+  'Beijing':     {x:823,y:149,color:'#E0B23B'},
+  'Shanghai':    {x:838,y:173,color:'#C4534E'},
+  'Singapore':   {x:788,y:256,color:'#3E8E7E'},
+  'Tokyo':       {x:888,y:161,color:'#B85C79'}
+};
+const FALLBACK_COLORS = ['#3B6EA8','#D9A13B','#D9779C','#8E7CC3','#3E8E7E','#C25E4C','#7A8B4E','#B85C79'];
+let fallbackIdx = 0;
+function cityColor(name){
+  if(CITIES[name]) return CITIES[name].color;
+  if(!cityColor._extra) cityColor._extra = {};
+  if(!cityColor._extra[name]) cityColor._extra[name] = FALLBACK_COLORS[fallbackIdx++ % FALLBACK_COLORS.length];
+  return cityColor._extra[name];
+}
+
+/* ---------- onboarding questions (DRAFT — edit freely) ---------- */
+const QUESTIONS = [
+  {movement:'Before we begin', q:'What is your full name?', sub:'As you\'d like it to appear on your profile.', type:'text', req:true},
+  {movement:'Before we begin', q:'What is your email?', sub:'For your sign-in link, and where Coco will reach you about your application and introductions.', type:'email', req:true},
+  {movement:'Before we begin', q:'When were you born?', sub:'Your life map begins here.', type:'date', req:true},
+  {movement:'Before we begin', q:'Which city are you in right now?', sub:'City-level only. This places you on the map.', type:'city', req:true},
+  {movement:'I · How you think', q:'What are you trying to figure out right now?', sub:'A question you\'re living inside — professional or not.', chars:400},
+  {movement:'I · How you think', q:'What did you believe strongly five years ago that you\'ve since abandoned?', sub:'And what changed your mind.', chars:400},
+  {movement:'I · How you think', q:'What could you talk about for an hour, unprepared, with delight?', chars:300},
+  {movement:'I · How you think', q:'What question do you wish people asked you?', sub:'Answer it, too, if you like.', chars:300},
+  {movement:'II · How you spend time', q:'Describe a perfect, ordinary Tuesday.', sub:'Not a vacation. A Tuesday.', chars:500},
+  {movement:'II · How you spend time', q:'What are you building — and what does it look like when it works?', chars:500},
+  {movement:'II · How you spend time', q:'What do you do that isn\'t productive at all, and love anyway?', chars:300},
+  {movement:'II · How you spend time', q:'Credentials aside, what could you teach a masterclass on?', chars:300},
+  {movement:'III · How you move', q:'Which cities have felt like home? What made them so?', chars:400},
+  {movement:'III · How you move', q:'What do you do in your first 48 hours in a new city?', chars:300},
+  {movement:'III · How you move', q:'Where will you be over the next three months?', sub:'Roughly. You\'ll map this precisely later.', chars:200},
+  {movement:'III · How you move', q:'What does "home" mean, when you don\'t stay anywhere long?', chars:400},
+  {movement:'IV · Character', q:'What is the most 不安分 — restless — thing you\'ve ever done?', chars:400},
+  {movement:'IV · Character', q:'What do you want from this community, and what will you give it?', chars:400},
+  {movement:'IV · Character', q:'Who should we ask about you?', sub:'A person who knows your character. Name and how you know them.', chars:200}
+];
+
+const CITY_LIST = [
+  ['New York','United States'],['Los Angeles','United States'],['San Francisco','United States'],['Phoenix','United States'],['Austin','United States'],['Miami','United States'],['Chicago','United States'],['Boston','United States'],['Seattle','United States'],['Washington DC','United States'],
+  ['Toronto','Canada'],['Vancouver','Canada'],['Mexico City','Mexico'],['São Paulo','Brazil'],['Buenos Aires','Argentina'],['Bogotá','Colombia'],
+  ['London','United Kingdom'],['Lisbon','Portugal'],['Porto','Portugal'],['Paris','France'],['Berlin','Germany'],['Madrid','Spain'],['Barcelona','Spain'],['Amsterdam','Netherlands'],['Copenhagen','Denmark'],['Stockholm','Sweden'],['Oslo','Norway'],['Helsinki','Finland'],['Zurich','Switzerland'],['Geneva','Switzerland'],['Milan','Italy'],['Rome','Italy'],['Vienna','Austria'],['Prague','Czechia'],['Athens','Greece'],['Istanbul','Türkiye'],
+  ['Tel Aviv','Israel'],['Dubai','United Arab Emirates'],['Cairo','Egypt'],['Nairobi','Kenya'],['Lagos','Nigeria'],['Accra','Ghana'],['Cape Town','South Africa'],
+  ['Mumbai','India'],['Delhi','India'],['Bangalore','India'],['Bangkok','Thailand'],['Ho Chi Minh City','Vietnam'],['Hanoi','Vietnam'],['Kuala Lumpur','Malaysia'],['Singapore','Singapore'],['Jakarta','Indonesia'],['Denpasar (Bali)','Indonesia'],
+  ['Hong Kong','Hong Kong SAR'],['Taipei','Taiwan'],['Beijing','China'],['Shanghai','China'],['Shenzhen','China'],['Chengdu','China'],['Hangzhou','China'],['Seoul','South Korea'],['Tokyo','Japan'],['Osaka','Japan'],['Kyoto','Japan'],
+  ['Sydney','Australia'],['Melbourne','Australia'],['Auckland','New Zealand']
+];
+
+const TIERS = [
+  {name:'Creating', amt:15, per:'/mo + hours', desc:'Building mode without steady income. A few hours a month — hosting, editing, welcoming — alongside the fee.'},
+  {name:'Afloat', amt:45, per:'/mo', desc:'Workable income, keeping things lean. The honest middle.'},
+  {name:'Anchored', amt:120, per:'/mo', desc:'Full-time work, comfortable margins. You carry a little more of the roof.'},
+  {name:'Patron', amt:1000, per:'/mo', desc:'You invest for a living. Carry the room — and consider being an angel to the people in it.'}
+];
+
+/* ---------- mock members ---------- */
+const MEMBERS = [
+  {name:'Amara Diallo', field:'Documentary journalist', thinking:'How oral histories survive migration.',
+   stints:[{city:'Nairobi',start:'2025-09-01',end:'2026-02-15'},{city:'Lisbon',start:'2026-03-01',end:'2026-08-10'},{city:'Paris',start:'2026-08-15',end:'2026-11-30'}]},
+  {name:'Jonas Keller', field:'Climate scientist', thinking:'Whether cities can be carbon sinks, not just sources.',
+   stints:[{city:'Berlin',start:'2025-06-01',end:'2026-05-20'},{city:'Helsinki',start:'2026-06-01',end:'2026-09-15'},{city:'Singapore',start:'2026-10-01',end:'2026-12-20'}]},
+  {name:'Mei Lin', field:'Museum curator', thinking:'What a museum owes the living artists of its city.',
+   stints:[{city:'Shanghai',start:'2025-01-10',end:'2026-04-30'},{city:'Paris',start:'2026-05-10',end:'2026-09-01'},{city:'New York',start:'2026-09-10',end:'2026-12-15'}]},
+  {name:'Rafael Ortiz', field:'Founder · logistics', thinking:'Why the last mile is really the first mile, backwards.',
+   stints:[{city:'Mexico City',start:'2024-11-01',end:'2026-06-30'},{city:'New York',start:'2026-07-05',end:'2026-10-10'}]},
+  {name:'Sofia Lindqvist', field:'Interior designer', thinking:'Rooms that make strangers talk to each other.',
+   stints:[{city:'Helsinki',start:'2025-03-01',end:'2026-06-15'},{city:'Tokyo',start:'2026-06-25',end:'2026-10-01'}]},
+  {name:'David Okonkwo', field:'Trade negotiator', thinking:'Whether small nations can write the rules of AI trade.',
+   stints:[{city:'London',start:'2025-08-01',end:'2026-07-20'},{city:'Nairobi',start:'2026-07-25',end:'2026-10-30'}]},
+  {name:'Hana Sato', field:'Novelist', thinking:'A book that reads differently depending on the city you\'re in.',
+   stints:[{city:'Tokyo',start:'2025-02-01',end:'2026-05-30'},{city:'Lisbon',start:'2026-06-10',end:'2026-09-20'}]},
+  {name:'Lucas Meyer', field:'Operator · hospitality popups', thinking:'A hotel that exists for exactly six weeks.',
+   stints:[{city:'Berlin',start:'2025-10-01',end:'2026-04-15'},{city:'Mexico City',start:'2026-05-01',end:'2026-08-30'},{city:'Buenos Aires',start:'2026-09-05',end:'2026-12-01'}]},
+  {name:'Priya Raman', field:'Professor · neuroscience', thinking:'Why the traveling brain remembers more.',
+   stints:[{city:'Singapore',start:'2025-01-01',end:'2026-06-01'},{city:'London',start:'2026-06-15',end:'2026-12-15'}]},
+  {name:'Tomás Silva', field:'Chef & food anthropologist', thinking:'Recipes as the oldest form of open-source.',
+   stints:[{city:'Lisbon',start:'2025-05-01',end:'2026-07-31'},{city:'Buenos Aires',start:'2026-08-10',end:'2026-11-20'}]},
+  {name:'Nadia Petrova', field:'Violinist', thinking:'Concerts in rooms that were never meant for music.',
+   stints:[{city:'Paris',start:'2025-09-01',end:'2026-06-30'},{city:'New York',start:'2026-07-08',end:'2026-10-05'}]},
+  {name:'Wei Zhang', field:'Angel investor', thinking:'Backing people who\'ve lived in three worlds.',
+   stints:[{city:'Beijing',start:'2025-04-01',end:'2026-06-20'},{city:'Singapore',start:'2026-07-01',end:'2026-09-30'},{city:'Phoenix',start:'2026-10-05',end:'2026-11-15'}]}
+];
+
+const EVENTS = [
+  {d:'24',m:'JUL',title:'Salon: The Questions, Answered Aloud',meta:'LISBON · 15 SEATS · HOSTED BY AMARA D.',desc:'The founding format: each guest brings one of their own onboarding answers and reads it. Discussion follows. Admission by application quality.',cap:'随喜 · SUGGESTED €20'},
+  {d:'02',m:'AUG',title:'Parallax Tour: Ports & Power',meta:'LISBON → PORTO · 3 DAYS · 12 SEATS',desc:'A business tour through Portugal\'s Atlantic economy — shipyards, wine houses, and the new tech corridor. The flagship Parallax format, now a member gathering.',cap:'MEMBER PRICING'},
+  {d:'18',m:'SEP',title:'Popup City: Mexico City, Two Weeks',meta:'CDMX · 14 DAYS · 40 MEMBERS',desc:'The mobile chapter model: forty members converge on one city. Shared workspace mornings, small-room dinners, one masterclass per member who offers one.',cap:'随喜 · SUGGESTED $180'},
+  {d:'09',m:'OCT',title:'Dinner of Eight: What Did You Abandon?',meta:'NEW YORK · 8 SEATS · HOSTED BY NADIA P.',desc:'One table, one question — the belief you held five years ago and let go. Seats drawn from members in the city that week, via the map.',cap:'随喜 · COST OF DINNER'}
+];
+
+/* ---------- state ---------- */
+const state = {answers:{}, pledge:null, submitted:false, myStints:[], obIndex:0, appId:null};
+let curView = 'welcome', lastView = 'members';
+
+/* ---------- routing ---------- */
+function go(v){
+  if(v==='member' && curView!=='member') lastView = curView;
+  curView = v;
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.v===v));
+  if(v==='map') renderMap();
+  if(v==='members') renderMembers();
+  if(v==='profile') renderProfile();
+  if(v==='events') renderEvents();
+  window.scrollTo({top:0});
+}
+
+/* ---------- onboarding ---------- */
+function startOnboarding(){
+  state.appId = state.appId || (window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'app-'+Date.now());
+  state.obIndex=0; go('onboarding'); renderQuestion();
+}
+function renderQuestion(){
+  const i = state.obIndex, total = QUESTIONS.length + 1; // +1 tier step
+  const stage = document.getElementById('ob-stage');
+  document.getElementById('ob-bar').style.width = (i/total*100)+'%';
+  document.getElementById('ob-count').textContent = (i+1)+' / '+total;
+  document.getElementById('ob-back').style.visibility = i===0?'hidden':'visible';
+
+  if(i === QUESTIONS.length){ renderTierStep(stage); return; }
+  if(i === QUESTIONS.length+1){ renderDone(stage); return; }
+
+  const Q = QUESTIONS[i];
+  const val = state.answers[i]||'';
+  let inputHTML;
+  if(Q.type==='text'){
+    inputHTML = `<input type="text" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="off">`;
+  } else if(Q.type==='email'){
+    inputHTML = `<input type="email" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="email" placeholder="you@example.com">`;
+  } else if(Q.type==='date'){
+    inputHTML = `<input type="date" id="ob-field" value="${val}" max="2010-12-31" style="max-width:260px">`;
+  } else if(Q.type==='city'){
+    inputHTML = `<div class="ac-wrap"><input type="text" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="off" placeholder="Start typing a city…"><div class="ac-list" id="ac-list" style="display:none"></div></div>`;
+  } else {
+    inputHTML = `<textarea id="ob-field">${val}</textarea>`;
+  }
+  stage.innerHTML = `
+    <div class="ob-movement">${Q.movement}</div>
+    <div class="ob-q">${Q.q}${Q.req?'<span class="req-star" title="Required">*</span>':''}</div>
+    ${Q.sub?`<div class="ob-sub">${Q.sub}</div>`:''}
+    <div class="ob-input">${inputHTML}</div>
+    <div class="ob-meta"><span class="saved" id="saved-tick">✓ SAVED</span>
+      ${Q.req?'<span class="eyebrow">* REQUIRED</span>':''}
+      ${Q.chars?`<span class="charcount" id="charcount">0 / ~${Q.chars} SUGGESTED</span>`:''}</div>`;
+  document.getElementById('ob-next').textContent = 'Continue';
+  const field = document.getElementById('ob-field');
+  field.focus();
+  if(Q.type==='city') attachCityAutocomplete(field, document.getElementById('ac-list'));
+  let t;
+  field.addEventListener('input', ()=>{
+    state.answers[i] = field.value;
+    if(Q.chars){ document.getElementById('charcount').textContent = field.value.length+' / ~'+Q.chars+' SUGGESTED'; }
+    clearTimeout(t);
+    t = setTimeout(async ()=>{ // autosave — writes the draft row to Supabase (or simulates in demo mode)
+      const ok = await saveDraft('draft');
+      const s = document.getElementById('saved-tick');
+      if(s && ok){ s.classList.add('show'); setTimeout(()=>s.classList.remove('show'),1600); }
+    },700);
+  });
+  if(Q.chars && val){ document.getElementById('charcount').textContent = val.length+' / ~'+Q.chars+' SUGGESTED'; }
+  field.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && (Q.type==='text'||Q.type==='email'||Q.type==='date'||e.metaKey||e.ctrlKey)){ e.preventDefault(); obNext(); }
+  });
+}
+function attachCityAutocomplete(input, list){
+  const render = ()=>{
+    const q = input.value.trim().toLowerCase();
+    if(q.length < 1){ list.style.display='none'; return; }
+    const hits = CITY_LIST.filter(([c,co])=>c.toLowerCase().includes(q)||co.toLowerCase().includes(q)).slice(0,8);
+    if(!hits.length){ list.style.display='none'; return; }
+    list.innerHTML = hits.map(([c,co])=>`<button type="button" data-c="${c}" data-co="${co}"><span>${c}</span><span class="ctry">${co}</span></button>`).join('');
+    list.style.display='block';
+    list.querySelectorAll('button').forEach(b=>b.addEventListener('mousedown',e=>{
+      e.preventDefault();
+      input.value = b.dataset.c+', '+b.dataset.co;
+      input.dispatchEvent(new Event('input'));
+      list.style.display='none';
+    }));
+  };
+  input.addEventListener('input', render);
+  input.addEventListener('focus', render);
+  input.addEventListener('blur', ()=>setTimeout(()=>list.style.display='none',150));
+}
+function renderTierStep(stage){
+  document.getElementById('ob-next').textContent = 'Submit application';
+  stage.innerHTML = `
+    <div class="ob-movement">V · 随喜 — One last question</div>
+    <div class="ob-q">What would feel right to contribute, monthly?</div>
+    <div class="ob-sub" style="max-width:56ch"><strong>This is not a commitment and nothing is charged.</strong> It's a signal — a number that feels right to you, today. We'll reach out for a conversation, build what you actually want, and only then will you decide.</div>
+    <div class="pledge-row">
+      <span class="cur">$</span>
+      <input type="number" id="pledge-field" min="0" step="1" placeholder="0" value="${state.pledge??''}">
+      <span class="per">/ MONTH</span>
+    </div>
+    <div class="ob-sub" style="margin:26px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase">If it helps, some reference points — tap to fill</div>
+    <div class="tier-grid">${TIERS.map((t,idx)=>`
+      <button class="tier" onclick="fillPledge(${t.amt})">
+        <div class="amt">$${t.amt.toLocaleString()}<span>${t.per}</span></div>
+        <div class="name">${t.name}</div>
+        <div class="desc">${t.desc}</div>
+      </button>`).join('')}</div>
+    <div class="ob-meta"><span class="eyebrow" style="margin-top:10px">PLACEHOLDER AMOUNTS — SET YOUR OWN · OPTIONAL, LEAVE BLANK TO SKIP</span></div>`;
+  const pf = document.getElementById('pledge-field');
+  pf.addEventListener('input',()=>{ state.pledge = pf.value===''?null:Number(pf.value); });
+}
+function fillPledge(amt){
+  const pf = document.getElementById('pledge-field');
+  pf.value = amt; state.pledge = amt; pf.focus();
+}
+function renderDone(stage){
+  state.submitted = true;
+  saveDraft('submitted');
+  // seed "next three months" answer as a first stint if we know the city
+  const cityRaw = (state.answers[3]||'').split(',')[0].trim();
+  if(cityRaw && state.myStints.length===0){
+    state.myStints.push({city:properCity(cityRaw), start:'2026-07-11', end:'2026-09-30'});
+  }
+  document.getElementById('ob-bar').style.width='100%';
+  document.getElementById('ob-next').textContent='View your profile';
+  document.getElementById('ob-back').style.visibility='hidden';
+  stage.innerHTML = `
+    <div class="ob-movement">Received</div>
+    <div class="ob-q">Your application is in the room.</div>
+    <div class="ob-sub" style="max-width:52ch">Every application is read by a person, not scored by a machine. Those who clearly loved answering tend to hear back with an invitation — often to a salon built around these very questions. Watch your inbox.</div>`;
+}
+function properCity(c){ // match against known cities case-insensitively
+  c = c.split(',')[0].trim();
+  const hit = Object.keys(CITIES).find(k=>k.toLowerCase()===c.toLowerCase());
+  return hit || c.replace(/\b\w/g,ch=>ch.toUpperCase());
+}
+function obNext(){
+  const i = state.obIndex;
+  if(i < QUESTIONS.length && QUESTIONS[i].req && !(state.answers[i]||'').trim()){
+    document.getElementById('ob-field').focus(); return;
+  }
+  if(i === QUESTIONS.length+1){ go('profile'); return; }
+  state.obIndex++; renderQuestion();
+}
+function obPrev(){ if(state.obIndex>0){ state.obIndex--; renderQuestion(); } }
+
+/* ---------- life map ---------- */
+function renderLifeMap(stints, opts={}){
+  if(!stints.length) return '<div style="color:var(--ink-soft);font-size:14px">No stints yet.</div>';
+  const parse = d=>new Date(d+'T00:00:00');
+  const sorted = [...stints].sort((a,b)=>parse(a.start)-parse(b.start));
+  const min = opts.birth ? parse(opts.birth) : parse(sorted[0].start);
+  const max = new Date(sorted.reduce((m,s)=>Math.max(m,parse(s.end)),0));
+  const span = Math.max(max-min, 1);
+  const W = 900, H = 132, barY = 60, barH = 22, padL = 10, padR = 10, IW = W-padL-padR;
+  const X = d=>padL + (parse(d)-min)/span*IW;
+  // compute segment bounds, then snap gaps of ≤21 days closed (visual continuity)
+  const SNAP = 21*24*3600*1000;
+  const segs = sorted.map(s=>({...s, x1:X(s.start), x2:Math.max(X(s.end),X(s.start)+4)}));
+  for(let k=1;k<segs.length;k++){
+    const gap = parse(segs[k].start) - parse(segs[k-1].end);
+    if(gap > 0 && gap <= SNAP) segs[k-1].x2 = segs[k].x1;
+  }
+  let seg = '', labels = '';
+  segs.forEach((s,idx)=>{
+    const c = cityColor(s.city);
+    const mid = (s.x1+s.x2)/2;
+    const above = idx%2===0;
+    const ly = above ? barY-18 : barY+barH+28;
+    seg += `<rect x="${s.x1.toFixed(1)}" y="${barY}" width="${(s.x2-s.x1).toFixed(1)}" height="${barH}" fill="${c}"></rect>`;
+    labels += `<line x1="${mid.toFixed(1)}" y1="${above?barY-6:barY+barH+6}" x2="${mid.toFixed(1)}" y2="${above?ly+4:ly-12}" stroke="${c}" stroke-width="1" opacity=".5"></line>
+      <text x="${mid.toFixed(1)}" y="${ly}" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink)" letter-spacing=".04em">${s.city.toUpperCase()}</text>`;
+  });
+  // year ticks: label multiples of 5, small marks otherwise
+  let ticks = '';
+  const maxYear = max.getFullYear();
+  for(let y = min.getFullYear(); y <= maxYear; y++){
+    const d = new Date(y,0,1);
+    if(d < min || d > max) continue;
+    const x = padL + (d-min)/span*IW;
+    const major = y % 5 === 0;
+    ticks += `<line x1="${x.toFixed(1)}" y1="${major?barY-6:barY+barH/2-4}" x2="${x.toFixed(1)}" y2="${major?barY+barH+6:barY+barH/2+4}" stroke="var(--line)" stroke-width="1"></line>`;
+    if(major) ticks += `<text x="${x.toFixed(1)}" y="${H-6}" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink-faint)">${y}</text>`;
+  }
+  // birth marker
+  let birthMark = '';
+  if(opts.birth){
+    birthMark = `<circle cx="${padL}" cy="${barY+barH/2}" r="3.5" fill="var(--marigold)"></circle>
+      <text x="${padL}" y="${barY+barH+42}" text-anchor="start" font-family="var(--mono)" font-size="9" fill="var(--marigold)" letter-spacing=".08em">B. ${new Date(opts.birth+'T00:00:00').getFullYear()}</text>`;
+  }
+  const uniq = [...new Set(sorted.map(s=>s.city))];
+  const legend = opts.legend===false ? '' :
+    `<div class="legend">${uniq.map(c=>`<span class="chip"><span class="dot" style="background:${cityColor(c)}"></span>${c}</span>`).join('')}</div>`;
+  return `<svg viewBox="0 0 ${W} ${H}" style="min-width:640px;width:100%;display:block">
+    <line x1="${padL}" y1="${barY+barH/2}" x2="${W-padR}" y2="${barY+barH/2}" stroke="var(--line)" stroke-width="1"></line>
+    ${ticks}${seg}${labels}${birthMark}</svg>${legend}`;
+}
+
+/* ---------- profile ---------- */
+function renderProfile(){
+  const root = document.getElementById('profile-root');
+  if(!state.submitted){
+    root.innerHTML = `<div class="empty-state">
+      <div class="eyebrow" style="justify-content:center"><span class="tick">◆</span>&nbsp;NO PROFILE YET</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.15;margin-top:14px">Your profile begins with the ritual.</h2>
+      <p style="max-width:44ch;margin:10px auto 0">Fifteen questions, one per page, saved as you go. Take the full twenty-five minutes — the answers become the profile.</p>
+      <button class="btn" onclick="startOnboarding()">Begin the ritual →</button></div>`;
+    return;
+  }
+  const name = state.answers[0]||'You';
+  const birth = state.answers[2]||null;
+  const city = state.myStints.length?state.myStints[0].city:properCity(state.answers[3]||'');
+  const initials = name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const answers = QUESTIONS.map((Q,i)=>({Q,a:state.answers[i]})).filter(x=>!x.Q.type && (x.a||'').trim());
+  root.innerHTML = `
+    <div class="profile-hero">
+      <div class="avatar">${initials}</div>
+      <div>
+        <span class="eyebrow"><span class="tick">◆</span>&nbsp;MEMBER PROFILE${state.pledge!=null?' · 随喜 $'+Number(state.pledge).toLocaleString()+'/MO (SIGNAL ONLY)':''}</span>
+        <h2>${name}</h2>
+        <div class="whereline eyebrow">CURRENTLY · ${city.toUpperCase()}${birth?' · B. '+new Date(birth+'T00:00:00').getFullYear():''}</div>
+        <div class="btn-row" style="margin-top:18px"><button class="btn ghost" style="padding:9px 18px;font-size:13px" onclick="exportCSV()">Download answers (.csv)</button></div>
+      </div>
+    </div>
+    <div class="section-head"><h2>Life map</h2><div class="rule"></div><span class="eyebrow">FROM BIRTH TO YOUR NEXT CITY</span></div>
+    <div class="lifemap-wrap" id="my-lifemap">${renderLifeMap(state.myStints,{birth})}</div>
+    <form class="stint-form" onsubmit="addStint(event)">
+      <label>City<span class="ac-wrap"><input type="text" id="st-city" required placeholder="Lisbon" autocomplete="off"><span class="ac-list" id="st-ac" style="display:none"></span></span></label>
+      <label>From<input type="date" id="st-start" required value="2026-10-01"></label>
+      <label>To<input type="date" id="st-end" required value="2026-11-15"></label>
+      <button class="btn ghost" type="submit">Add stint</button>
+    </form>
+    <div class="section-head"><h2>How you think, spend time, and move</h2><div class="rule"></div></div>
+    ${answers.length?`<div class="answer-grid">${answers.map(x=>`<div class="answer"><div class="q">${x.Q.q}</div><div class="a">${esc(x.a)}</div></div>`).join('')}</div>`
+      :'<p style="color:var(--ink-soft)">You skipped the written questions — go back through the ritual to fill them in.</p>'}`;
+  attachCityAutocomplete(document.getElementById('st-city'), document.getElementById('st-ac'));
+}
+function addStint(e){
+  e.preventDefault();
+  const city = properCity(document.getElementById('st-city').value.trim());
+  const start = document.getElementById('st-start').value, end = document.getElementById('st-end').value;
+  if(!city||!start||!end||start>end) return;
+  state.myStints.push({city,start,end});
+  saveDraft(state.submitted?'submitted':'draft');
+  document.getElementById('my-lifemap').innerHTML = renderLifeMap(state.myStints,{birth:state.answers[2]||null});
+  document.getElementById('st-city').value='';
+}
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function exportCSV(){
+  // Same shape as the production admissions spreadsheet: one row per applicant, one column per question
+  const q = s=>'"'+String(s??'').replace(/"/g,'""')+'"';
+  const headers = [...QUESTIONS.map(Q=>Q.q), '随喜 signal ($/mo)', 'Life map stints'];
+  const row = [...QUESTIONS.map((Q,i)=>state.answers[i]||''), state.pledge??'',
+    state.myStints.map(s=>`${s.city} ${s.start}→${s.end}`).join('; ')];
+  const csv = headers.map(q).join(',')+'\n'+row.map(q).join(',');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'solei-application.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ---------- world map ---------- */
+let mapDate = '2026-07-11';
+function locationOn(member, dateStr){
+  const d = new Date(dateStr+'T12:00:00');
+  return member.stints.find(s=> new Date(s.start)<=d && d<=new Date(s.end+'T23:59:59'))?.city || null;
+}
+function everyoneWithMe(){
+  const all = [...MEMBERS];
+  if(state.submitted && state.myStints.length){
+    all.push({name:(state.answers[0]||'You')+' (you)', field:'New member', thinking:'', stints:state.myStints});
+  }
+  return all;
+}
+const CONTINENTS = [
+  '55,85 150,60 240,65 285,105 300,150 275,160 250,205 235,240 225,255 210,245 195,210 150,170 110,140 75,115',
+  '265,265 300,260 330,285 340,330 325,385 300,425 290,430 280,390 270,340 255,300',
+  '470,80 540,70 560,100 545,125 520,130 495,140 480,120 465,105',
+  '480,155 545,150 575,185 570,240 545,300 520,330 505,325 490,280 470,225 465,185',
+  '560,65 700,55 800,80 830,120 810,160 770,180 740,210 715,235 690,215 660,190 620,170 590,140 565,110',
+  '665,195 695,190 705,225 685,260 670,230',
+  '800,340 865,335 885,365 870,400 820,405 795,375'
+];
+function renderMap(selectedCity){
+  const svg = document.getElementById('worldmap');
+  const byCity = {};
+  everyoneWithMe().forEach(m=>{
+    const c = locationOn(m, mapDate);
+    if(c && CITIES[c]){ (byCity[c] = byCity[c]||[]).push(m); }
+  });
+  let grid = '';
+  for(let gx=0; gx<=1000; gx+=100) grid += `<line x1="${gx}" y1="10" x2="${gx}" y2="510" stroke="var(--night-line)" stroke-width="0.5" opacity=".5"/>`;
+  for(let gy=10; gy<=510; gy+=100) grid += `<line x1="0" y1="${gy}" x2="1000" y2="${gy}" stroke="var(--night-line)" stroke-width="0.5" opacity=".5"/>`;
+  const land = CONTINENTS.map(p=>`<polygon points="${p}" fill="#25324D" opacity=".55"/>`).join('');
+  const dots = Object.entries(byCity).map(([city,members])=>{
+    const {x,y} = CITIES[city];
+    const r = 4 + Math.min(members.length,6)*1.6;
+    return `<g class="city-dot" onclick="renderMap('${city}')" role="button" aria-label="${city}, ${members.length} members">
+      <circle class="halo" cx="${x}" cy="${y}" r="${r+9}"></circle>
+      <circle class="core" cx="${x}" cy="${y}" r="${r}"></circle>
+      <text x="${x}" y="${y-r-12}" text-anchor="middle">${city.toUpperCase()}</text>
+      <text class="count" x="${x}" y="${y-r-25}" text-anchor="middle">${members.length}</text></g>`;
+  }).join('');
+  svg.innerHTML = grid + land + dots;
+  // panel
+  const head = document.getElementById('map-panel-head');
+  const panel = document.getElementById('map-members');
+  if(selectedCity && byCity[selectedCity]){
+    head.innerHTML = `${selectedCity.toUpperCase()} · ${byCity[selectedCity].length} ${byCity[selectedCity].length===1?'MEMBER':'MEMBERS'} ON ${fmtDate(mapDate)}`;
+    panel.innerHTML = byCity[selectedCity].map(m=>{
+      const idx = MEMBERS.indexOf(m);
+      return `<button class="mm-card" ${idx>=0?`onclick="openMember(${idx})"`:''}>
+        <div class="nm">${m.name}</div><div class="fd">${m.field}</div>
+        <div class="dt">UNTIL ${fmtDate(m.stints.find(s=>s.city===selectedCity && new Date(s.start)<=new Date(mapDate+'T12:00:00') && new Date(mapDate+'T12:00:00')<=new Date(s.end+'T23:59:59'))?.end || '')}</div></button>`;
+    }).join('');
+  } else {
+    const cities = Object.keys(byCity).length;
+    const people = Object.values(byCity).reduce((n,a)=>n+a.length,0);
+    head.textContent = `${people} MEMBERS ACROSS ${cities} CITIES ON ${fmtDate(mapDate)} — TAP A CITY`;
+    panel.innerHTML = '';
+  }
+}
+function fmtDate(d){
+  if(!d) return '—';
+  const dt = new Date(d+'T12:00:00');
+  return dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+}
+function setMapToday(){ mapDate='2026-07-11'; document.getElementById('map-date').value=mapDate;
+  document.getElementById('seg-today').classList.add('on'); document.getElementById('seg-date').classList.remove('on'); renderMap(); }
+function setMapDate(v){ if(!v) return; mapDate=v;
+  document.getElementById('seg-today').classList.remove('on'); document.getElementById('seg-date').classList.add('on'); renderMap(); }
+
+/* ---------- members ---------- */
+function renderMembers(){
+  const grid = document.getElementById('member-grid');
+  grid.innerHTML = MEMBERS.map((m,i)=>{
+    const now = locationOn(m,'2026-07-11');
+    return `<button class="member-card" onclick="openMember(${i})">
+      <div class="mini-avatar">${m.name.split(/\s+/).map(w=>w[0]).slice(0,2).join('')}</div>
+      <h3>${m.name}</h3><div class="field">${m.field}</div>
+      <div class="thinking">"${m.thinking}"</div>
+      <div class="where">◆ ${now?now.toUpperCase():'IN TRANSIT'}</div></button>`;
+  }).join('');
+}
+function openMember(i){
+  const m = MEMBERS[i];
+  if(curView!=='member') lastView = curView;
+  const now = locationOn(m,'2026-07-11');
+  document.getElementById('member-root').innerHTML = `
+    <div style="padding-top:36px">
+      <button class="btn ghost" onclick="go(lastView)" style="padding:9px 18px;font-size:13.5px">← Back to ${lastView==='map'?'the map':'members'}</button>
+    </div>
+    <div class="profile-hero" style="padding-top:36px">
+      <div class="avatar">${m.name.split(/\s+/).map(w=>w[0]).slice(0,2).join('')}</div>
+      <div style="flex:1;min-width:260px">
+        <span class="eyebrow"><span class="tick">◆</span>&nbsp;${m.field.toUpperCase()}</span>
+        <h2>${m.name}</h2>
+        <div class="whereline eyebrow">CURRENTLY · ${now?now.toUpperCase():'IN TRANSIT'}</div>
+        <p style="font-style:italic;margin-top:16px;font-size:17px;max-width:52ch">"${m.thinking}"</p>
+        <div class="btn-row" style="margin-top:22px">
+          <button class="btn" onclick="requestIntro('${m.name.replace(/'/g,"\\'")}')">Request an introduction</button>
+        </div>
+      </div>
+    </div>
+    <div class="section-head"><h2>Life map</h2><div class="rule"></div></div>
+    <div class="lifemap-wrap">${renderLifeMap(m.stints)}</div>
+    <div class="section-head"><h2>How they think, spend time, and move</h2><div class="rule"></div></div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;max-width:60ch">FULL PROFILE ANSWERS APPEAR HERE IN PRODUCTION — SAME EDITORIAL LAYOUT AS YOUR OWN PROFILE.</p>`;
+  go('member');
+}
+function requestIntro(name){
+  document.getElementById('intro-body').innerHTML = `
+    <span class="eyebrow"><span class="tick">◆</span>&nbsp;REQUEST AN INTRODUCTION</span>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15;margin-top:8px">To ${name}</h2>
+    <p style="color:var(--ink-soft);font-size:14.5px;margin-top:8px">A few honest lines on why you'd like to connect. Specific beats polished.</p>
+    <textarea id="intro-msg" placeholder="I'm working on… and your thinking on… — I'd love to compare notes over coffee when we overlap."></textarea>
+    <div class="expect"><strong>What happens next:</strong> your message goes to Coco. If it's a fit, she makes the introduction personally, by email, connecting you both. No open DMs — every introduction passes through a person.</div>
+    <div class="btn-row" style="margin-top:18px">
+      <button class="btn" onclick="sendIntro('${name.replace(/'/g,"\\'")}')">Send to Coco</button>
+      <button class="btn ghost" onclick="closeIntro()">Cancel</button>
+    </div>`;
+  document.getElementById('intro-back').classList.add('open');
+  setTimeout(()=>document.getElementById('intro-msg').focus(),50);
+}
+function sendIntro(name){
+  const msg = (document.getElementById('intro-msg').value||'').trim();
+  if(!msg){ document.getElementById('intro-msg').focus(); return; }
+  if(sb){ sb.from('intro_requests').insert({
+    to_member: name, message: msg,
+    from_name: state.answers[0]||null, from_email: state.answers[1]||null
+  }).then(({error})=>{ if(error) console.error('Intro request failed:', error.message); }); }
+  document.getElementById('intro-body').innerHTML = `
+    <span class="eyebrow"><span class="tick">◆</span>&nbsp;SENT</span>
+    <h2 style="font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15;margin-top:8px">On its way to Coco.</h2>
+    <p style="color:var(--ink-soft);font-size:15px;margin-top:10px;line-height:1.65">She reads every request and makes introductions personally, by email. If ${name} is open to it, you'll both hear from her — usually within a few days.</p>
+    <div class="btn-row" style="margin-top:18px"><button class="btn" onclick="closeIntro()">Done</button></div>`;
+}
+function closeIntro(){ document.getElementById('intro-back').classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeIntro(); });
+
+/* ---------- events ---------- */
+function renderEvents(){
+  document.getElementById('event-list').innerHTML = EVENTS.map(e=>`
+    <div class="event">
+      <div class="date-block"><div class="m">${e.m}</div><div class="d">${e.d}</div></div>
+      <div class="body"><h3>${e.title}</h3><div class="meta">${e.meta}</div><div class="desc">${e.desc}</div></div>
+      <div style="text-align:right"><div class="cap">${e.cap}</div><button class="btn ghost" style="margin-top:10px" onclick="alert('Prototype — production opens the Luma event page.')">RSVP on Luma</button></div>
+    </div>`).join('');
+}
+
+/* ---------- boot ---------- */
+(function(){
+  const byCity = {};
+  MEMBERS.forEach(m=>{ const c=locationOn(m,'2026-07-11'); if(c)(byCity[c]=byCity[c]||[]).push(m); });
+  document.getElementById('stat-members').textContent = MEMBERS.length + ' founding';
+  document.getElementById('stat-cities').textContent = Object.keys(byCity).length;
+  document.getElementById('stat-events').textContent = EVENTS.length;
+})();
+</script>
+</body>
+</html>
