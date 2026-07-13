@@ -38,7 +38,7 @@ a{color:inherit}
 nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px)}
 .nav-inner{max-width:1180px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:8px}
 .wordmark{font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.22em;margin-right:auto;display:flex;align-items:baseline;gap:10px;background:none;border:none;color:var(--ink)}
-.logo-img{height:26px;display:block}
+.logo-img{height:34px;display:block}
 .tab{background:none;border:none;font-size:14px;font-weight:500;color:var(--ink-soft);padding:8px 12px;border-radius:20px;transition:color .15s,background .15s}
 .tab:hover{color:var(--ink)}
 .tab.active{color:var(--ink);background:#F0EFEC}
@@ -76,7 +76,7 @@ h1.hero em{font-style:italic;color:var(--marigold)}
 .ob-movement{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--marigold);margin-bottom:18px}
 .ob-q{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);line-height:1.18;margin-bottom:10px}
 .ob-sub{color:var(--ink-soft);margin-bottom:26px;font-size:15px}
-.ob-input textarea, .ob-input input[type=text]{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);font-family:var(--sans);font-size:18px;line-height:1.6;color:var(--ink);padding:8px 0;resize:none}
+.ob-input textarea, .ob-input input[type=text], .ob-input input[type=email], .ob-input input[type=url], .ob-input input[type=date]{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);font-family:var(--sans);font-size:18px;line-height:1.6;color:var(--ink);padding:8px 0;resize:none}
 .ob-input textarea{min-height:120px}
 .ob-input textarea:focus,.ob-input input:focus{border-bottom-color:var(--ink);outline:none}
 .req-star{color:var(--marigold);margin-left:6px;font-family:var(--serif)}
@@ -165,6 +165,49 @@ h1.hero em{font-style:italic;color:var(--marigold)}
 .member-card .where{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--marigold);margin-top:14px}
 
 
+/* ---------- season & mastermind ---------- */
+.dd-wrap{position:relative}
+.dd-btn{border:1px solid var(--ink);background:transparent;border-radius:22px;padding:11px 20px;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.dd-btn:hover{background:#F2F1EE}
+.dd-panel{position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;display:none;z-index:60;min-width:280px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+.dd-panel.open{display:block}
+.dd-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;width:100%;text-align:left;background:none;border:none;font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink);cursor:pointer}
+.dd-row:hover{background:var(--paper-raised)}
+.dd-row .dd-check{opacity:0;color:var(--marigold);font-weight:700}
+.dd-row.on .dd-check{opacity:1}
+.dd-row.on{color:var(--marigold)}
+.edit-label{display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.edit-label input{font-family:var(--sans) !important;font-size:15px !important;text-transform:none;letter-spacing:normal}
+.freeflow{display:flex;flex-direction:column;gap:26px}
+.freeflow-item .q{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:normal;text-transform:none;color:#4a4a4a;margin-bottom:8px;line-height:1.5}
+.freeflow-item .a{font-size:15.5px;line-height:1.6;white-space:pre-wrap;max-width:68ch}
+.season-card{background:var(--paper-raised);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:10px}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.tag-chip{border:1px solid var(--line);background:var(--paper);border-radius:18px;padding:7px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--ink);cursor:pointer;transition:all .12s}
+.tag-chip:hover{border-color:var(--ink)}
+.tag-chip.on{background:var(--marigold);border-color:var(--marigold);color:#fff}
+.season-line{width:100%;border:none;border-bottom:1px solid var(--line);background:transparent;font-family:var(--sans);font-size:16px;color:var(--ink);padding:8px 0;margin-top:6px}
+.season-line:focus{outline:none;border-bottom-color:var(--ink)}
+.mm-note{font-size:13.5px;color:var(--ink-soft);background:var(--marigold-soft);border-radius:10px;padding:12px 14px;margin-top:14px;line-height:1.55;font-family:var(--gsans)}
+.day-chip{min-width:46px;text-align:center}
+
+/* ---------- this season subnav + letter ---------- */
+.subnav{display:flex;gap:8px}
+.subnav button{background:transparent;border:1px solid var(--line);border-radius:20px;padding:9px 20px;font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.subnav button:hover{border-color:var(--ink);color:var(--ink)}
+.subnav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.letter-card{background:rgba(252,251,248,.96);border-radius:20px;max-width:760px;margin:28px auto;padding:48px 56px;box-shadow:0 24px 60px rgba(0,0,0,.18)}
+.letter-title{width:100%;border:none;background:transparent;font-family:var(--serif);font-size:24px;color:var(--ink);padding:0 0 14px;border-bottom:1px solid var(--line)}
+.letter-title:focus{outline:none;border-bottom-color:var(--ink)}
+.letter-body{width:100%;min-height:380px;border:none;background:transparent;font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--ink);resize:vertical;margin-top:20px}
+.letter-body:focus{outline:none}
+.letter-body::placeholder,.letter-title::placeholder{color:#B4AFA4;font-style:italic}
+.ab-row{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:14.5px;font-family:var(--gsans);cursor:pointer}
+.ab-row input[type=checkbox]{accent-color:var(--marigold);width:16px;height:16px;flex-shrink:0}
+.ab-row .ab-del{margin-left:auto;background:none;border:none;color:var(--ink-faint);font-size:17px;cursor:pointer;line-height:1;opacity:.4}
+.ab-row:hover .ab-del{opacity:1}
+@media (max-width:640px){.letter-card{padding:28px 22px}}
+
 /* ---------- intro modal ---------- */
 .modal-back{position:fixed;inset:0;background:rgba(20,28,43,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal-back.open{display:flex}
@@ -203,6 +246,7 @@ p,.creed-body,.ob-sub,.tier .desc,.event .desc,.member-card .field,.empty-state,
     <button class="tab" data-v="map" onclick="go('map')">Map</button>
     <button class="tab" data-v="members" onclick="go('members')">Members</button>
     <button class="tab" data-v="events" onclick="go('events')">Events</button>
+    <button class="tab" data-v="accountability" onclick="go('accountability')">This Season</button>
     <button class="tab" data-v="profile" onclick="go('profile')">Your profile</button>
   </div>
 </nav>
@@ -219,7 +263,7 @@ p,.creed-body,.ob-sub,.tier .desc,.event .desc,.member-card .field,.empty-state,
     <p>Admission is not a form. It is a ritual: fifteen questions that ask how you think, how you spend your time, and how you move. Those who love answering them tend to belong here.</p>
   </div>
   <div class="btn-row">
-    <button class="btn" onclick="startOnboarding()">Begin the ritual → <span style="font-family:var(--mono);font-size:11px;opacity:.7">~25 min</span></button>
+    <button class="btn" onclick="startOnboarding()">Begin the ritual → <span style="font-family:var(--mono);font-size:11px;opacity:.7">~10–15 min</span></button>
     <button class="btn ghost" onclick="go('map')">See who's where</button>
   </div>
   </div>
@@ -297,6 +341,9 @@ p,.creed-body,.ob-sub,.tier .desc,.event .desc,.member-card .field,.empty-state,
   <div class="luma-note">◆ PROTOTYPE — production version syncs this list from your lu.ma calendar via the Luma API</div>
 </section>
 
+<!-- ============ ACCOUNTABILITY ============ -->
+<section id="view-accountability" class="view"><div id="accountability-root"></div></section>
+
 <!-- ============ MEMBER (full page) ============ -->
 <section id="view-member" class="view"><div id="member-root"></div></section>
 
@@ -330,10 +377,17 @@ async function saveDraft(status){
     status: status || 'draft',
     full_name: state.answers[0] || null,
     email: state.answers[1] || null,
-    birthdate: state.answers[2] || null,
+    birthdate: state.birth || null,
     current_city: state.answers[3] || null,
+    social_link: state.answers[2] || null,
+    referred_by: state.answers[7] || null,
+    extras: state.extras,
     answers: state.answers,
     pledge: state.pledge,
+    season: state.season,
+    mastermind: state.mastermind,
+    letter: state.letter,
+    address_book: state.addressBook,
     stints: state.myStints,
     updated_at: new Date().toISOString()
   };
@@ -376,23 +430,19 @@ function cityColor(name){
 const QUESTIONS = [
   {movement:'Before we begin', q:'What is your full name?', sub:'As you\'d like it to appear on your profile.', type:'text', req:true},
   {movement:'Before we begin', q:'What is your email?', sub:'For your sign-in link, and where Coco will reach you about your application and introductions.', type:'email', req:true},
-  {movement:'Before we begin', q:'When were you born?', sub:'Your life map begins here.', type:'date', req:true},
+  {movement:'Before we begin', q:'Where can people find you online?', sub:'Personal website, Substack, Instagram, LinkedIn, RedNote — whatever represents you best. One link is enough.', type:'url', req:true},
   {movement:'Before we begin', q:'Which city are you in right now?', sub:'City-level only. This places you on the map.', type:'city', req:true},
-  {movement:'I · How you think', q:'What are you trying to figure out right now?', sub:'A question you\'re living inside — professional or not.', chars:400},
-  {movement:'I · How you think', q:'What did you believe strongly five years ago that you\'ve since abandoned?', sub:'And what changed your mind.', chars:400},
-  {movement:'I · How you think', q:'What could you talk about for an hour, unprepared, with delight?', chars:300},
-  {movement:'I · How you think', q:'What question do you wish people asked you?', sub:'Answer it, too, if you like.', chars:300},
-  {movement:'II · How you spend time', q:'Describe a perfect, ordinary Tuesday.', sub:'Not a vacation. A Tuesday.', chars:500},
-  {movement:'II · How you spend time', q:'What are you building — and what does it look like when it works?', chars:500},
-  {movement:'II · How you spend time', q:'What do you do that isn\'t productive at all, and love anyway?', chars:300},
-  {movement:'II · How you spend time', q:'Credentials aside, what could you teach a masterclass on?', chars:300},
-  {movement:'III · How you move', q:'Which cities have felt like home? What made them so?', chars:400},
-  {movement:'III · How you move', q:'What do you do in your first 48 hours in a new city?', chars:300},
-  {movement:'III · How you move', q:'Where will you be over the next three months?', sub:'Roughly. You\'ll map this precisely later.', chars:200},
-  {movement:'III · How you move', q:'What does "home" mean, when you don\'t stay anywhere long?', chars:400},
-  {movement:'IV · Character', q:'What is the most 不安分 — restless — thing you\'ve ever done?', chars:400},
-  {movement:'IV · Character', q:'What do you want from this community, and what will you give it?', chars:400},
-  {movement:'IV · Character', q:'Who should we ask about you?', sub:'A person who knows your character. Name and how you know them.', chars:200}
+  {movement:'A bit about you', q:'What\'s in your world? What do you often spend time thinking about?', sub:'Can be work or not work.', chars:400},
+  {movement:'A bit about you', q:'What are you looking for in this community, and in what ways will you contribute?', chars:400},
+  {movement:'A bit about you', q:'What\'s something you recently learned, discovered, or picked up that you love?', chars:300},
+  {movement:'Before you go', q:'Who referred you?', sub:'Solei is invite-only for now, friends of friends. Name the member who sent you.', type:'text', req:true}
+];
+
+/* Questions members answer later, on their own terms, from the profile */
+const PROFILE_QUESTIONS = [
+  {q:'Which cities have felt like home? What made them so?', chars:400},
+  {q:'Where do you live now, and why?', chars:300},
+  {q:'What\'s the craziest thing you\'ve ever done?', chars:400}
 ];
 
 const CITY_LIST = [
@@ -405,11 +455,39 @@ const CITY_LIST = [
   ['Sydney','Australia'],['Melbourne','Australia'],['Auckland','New Zealand']
 ];
 
+const SEASON_TAGS = ['#building-a-company','#figuring-out-whats-next','#writing-a-book','#raising-young-kids','#making-art','#building-better-relationships'];
+
+/* Astronomical seasons (northern naming): equinoxes & solstices */
+function seasonInfo(d){
+  const y = d.getFullYear();
+  const marks = [
+    {name:'Spring', date:new Date(y,2,20)},
+    {name:'Summer', date:new Date(y,5,21)},
+    {name:'Autumn', date:new Date(y,8,22)},
+    {name:'Winter', date:new Date(y,11,21)}
+  ];
+  // find current season
+  let cur, next;
+  if(d < marks[0].date){ cur = {name:'Winter', year:y-1, start:new Date(y-1,11,21)}; next = {name:'Spring', year:y, start:marks[0].date}; }
+  else {
+    for(let i=0;i<marks.length;i++){
+      const end = i<3 ? marks[i+1].date : new Date(y+1,2,20);
+      if(d >= marks[i].date && d < end){
+        cur = {name:marks[i].name, year:y, start:marks[i].date, end};
+        next = i<3 ? {name:marks[i+1].name, year:y, start:marks[i+1].date} : {name:'Spring', year:y+1, start:new Date(y+1,2,20)};
+        break;
+      }
+    }
+  }
+  const fmt = dt=>dt.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+  return {cur, next, fmt};
+}
+
 const TIERS = [
-  {name:'Creating', amt:15, per:'/mo + hours', desc:'Building mode without steady income. A few hours a month — hosting, editing, welcoming — alongside the fee.'},
-  {name:'Afloat', amt:45, per:'/mo', desc:'Workable income, keeping things lean. The honest middle.'},
-  {name:'Anchored', amt:120, per:'/mo', desc:'Full-time work, comfortable margins. You carry a little more of the roof.'},
-  {name:'Patron', amt:1000, per:'/mo', desc:'You invest for a living. Carry the room — and consider being an angel to the people in it.'}
+  {name:'Creator', amt:15, label:'$1–15', per:'/mo', desc:'Building mode without steady income. Can contribute a few hours a month.'},
+  {name:'Core', amt:45, per:'/mo', desc:'Workable income. The honest middle.'},
+  {name:'Anchor', amt:120, per:'/mo', desc:'Full-time work, comfortable margins. Because of you, diversity of minds is possible.'},
+  {name:'Angel Investor', amt:20000, per:'one-time', desc:'See it scale to help millions.', note:'To indicate interest, not now. We\'ll send investment-specific updates your way.'}
 ];
 
 /* ---------- mock members ---------- */
@@ -448,7 +526,7 @@ const EVENTS = [
 ];
 
 /* ---------- state ---------- */
-const state = {answers:{}, pledge:null, submitted:false, myStints:[], obIndex:0, appId:null};
+const state = {answers:{}, extras:{}, pledge:null, pledgePeriod:'month', submitted:false, myStints:[], obIndex:0, appId:null, birth:null, editing:false, joinedAt:null, season:{tags:[],other:''}, mastermind:null, extraEditing:{}, seasonView:'accountability', letter:{title:'',text:'',sharedToSolei:false,sentTo:[],sentAt:null}, addressBook:[], letterRecipients:[]};
 let curView = 'welcome', lastView = 'members';
 
 /* ---------- routing ---------- */
@@ -462,6 +540,8 @@ function go(v){
   if(v==='members') renderMembers();
   if(v==='profile') renderProfile();
   if(v==='events') renderEvents();
+  if(v==='accountability') renderAccountability();
+  if(v!=='accountability') clearLetterScene();
   window.scrollTo({top:0});
 }
 
@@ -487,6 +567,8 @@ function renderQuestion(){
     inputHTML = `<input type="text" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="off">`;
   } else if(Q.type==='email'){
     inputHTML = `<input type="email" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="email" placeholder="you@example.com">`;
+  } else if(Q.type==='url'){
+    inputHTML = `<input type="url" id="ob-field" value="${val.replace(/"/g,'&quot;')}" autocomplete="url" placeholder="https://…" inputmode="url">`;
   } else if(Q.type==='date'){
     inputHTML = `<input type="date" id="ob-field" value="${val}" max="2010-12-31" style="max-width:260px">`;
   } else if(Q.type==='city'){
@@ -519,7 +601,7 @@ function renderQuestion(){
   });
   if(Q.chars && val){ document.getElementById('charcount').textContent = val.length+' / ~'+Q.chars+' SUGGESTED'; }
   field.addEventListener('keydown',e=>{
-    if(e.key==='Enter' && (Q.type==='text'||Q.type==='email'||Q.type==='date'||e.metaKey||e.ctrlKey)){ e.preventDefault(); obNext(); }
+    if(e.key==='Enter' && (Q.type==='text'||Q.type==='email'||Q.type==='url'||Q.type==='date'||e.metaKey||e.ctrlKey)){ e.preventDefault(); obNext(); }
   });
 }
 function attachCityAutocomplete(input, list){
@@ -550,25 +632,31 @@ function renderTierStep(stage){
     <div class="pledge-row">
       <span class="cur">$</span>
       <input type="number" id="pledge-field" min="0" step="1" placeholder="0" value="${state.pledge??''}">
-      <span class="per">/ MONTH</span>
+      <span class="per" id="pledge-period">${state.pledgePeriod==='one-time'?'ONE-TIME':'/ MONTH'}</span>
     </div>
     <div class="ob-sub" style="margin:26px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase">If it helps, some reference points — tap to fill</div>
     <div class="tier-grid">${TIERS.map((t,idx)=>`
-      <button class="tier" onclick="fillPledge(${t.amt})">
-        <div class="amt">$${t.amt.toLocaleString()}<span>${t.per}</span></div>
+      <button class="tier" onclick="fillPledge(${t.amt},'${t.per}')">
+        <div class="amt">${t.label||('$'+t.amt.toLocaleString())}<span>${t.per}</span></div>
         <div class="name">${t.name}</div>
         <div class="desc">${t.desc}</div>
+        ${t.note?`<div class="desc" style="font-style:italic;margin-top:8px;opacity:.85">${t.note}</div>`:''}
       </button>`).join('')}</div>
     <div class="ob-meta"><span class="eyebrow" style="margin-top:10px">PLACEHOLDER AMOUNTS — SET YOUR OWN · OPTIONAL, LEAVE BLANK TO SKIP</span></div>`;
   const pf = document.getElementById('pledge-field');
   pf.addEventListener('input',()=>{ state.pledge = pf.value===''?null:Number(pf.value); });
 }
-function fillPledge(amt){
+function fillPledge(amt, per){
   const pf = document.getElementById('pledge-field');
-  pf.value = amt; state.pledge = amt; pf.focus();
+  pf.value = amt; state.pledge = amt;
+  state.pledgePeriod = (per==='one-time') ? 'one-time' : 'month';
+  const label = document.getElementById('pledge-period');
+  if(label) label.textContent = state.pledgePeriod==='one-time' ? 'ONE-TIME' : '/ MONTH';
+  pf.focus();
 }
 function renderDone(stage){
   state.submitted = true;
+  if(!state.joinedAt) state.joinedAt = new Date().toISOString();
   saveDraft('submitted');
   // seed "next three months" answer as a first stint if we know the city
   const cityRaw = (state.answers[3]||'').split(',')[0].trim();
@@ -651,43 +739,336 @@ function renderLifeMap(stints, opts={}){
 }
 
 /* ---------- profile ---------- */
+function linkHref(v){
+  v = (v||'').trim();
+  if(/^https?:\/\//i.test(v)) return v;
+  if(/^@/.test(v) || /\s/.test(v)) return 'https://www.google.com/search?q='+encodeURIComponent(v);
+  return 'https://'+v;
+}
+function seasonBadge(){
+  const tags = (state.season&&state.season.tags)||[];
+  const other = (state.season&&state.season.other)||'';
+  if(!tags.length && !other.trim()) return '';
+  const si = seasonInfo(TODAY);
+  const items = [...tags, ...(other.trim()?[other.trim()]:[])];
+  return `<div style="margin-top:14px">
+    <div class="eyebrow" style="margin-bottom:8px">THIS SEASON · ${si.cur.name.toUpperCase()} ${si.cur.year}</div>
+    <div class="chip-row" style="margin:0">${items.map(t=>`<span class="tag-chip on" style="cursor:default">${esc(t)}</span>`).join('')}</div>
+  </div>`;
+}
 function renderProfile(){
   const root = document.getElementById('profile-root');
   if(!state.submitted){
     root.innerHTML = `<div class="empty-state">
       <div class="eyebrow" style="justify-content:center"><span class="tick">◆</span>&nbsp;NO PROFILE YET</div>
       <h2 style="font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.15;margin-top:14px">Your profile begins with the ritual.</h2>
-      <p style="max-width:44ch;margin:10px auto 0">Fifteen questions, one per page, saved as you go. Take the full twenty-five minutes — the answers become the profile.</p>
+      <p style="max-width:44ch;margin:10px auto 0">Eight questions, one per page, saved as you go — about ten to fifteen minutes. The answers become the profile.</p>
       <button class="btn" onclick="startOnboarding()">Begin the ritual →</button></div>`;
     return;
   }
   const name = state.answers[0]||'You';
-  const birth = state.answers[2]||null;
+  const referrer = state.answers[7]||'';
+  const birth = state.birth;
   const city = state.myStints.length?state.myStints[0].city:properCity(state.answers[3]||'');
   const initials = name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  const answers = QUESTIONS.map((Q,i)=>({Q,a:state.answers[i]})).filter(x=>!x.Q.type && (x.a||'').trim());
+  const answers = QUESTIONS.map((Q,i)=>({Q,a:state.answers[i],i})).filter(x=>!x.Q.type && (x.a||'').trim());
+  const email = state.answers[1]||'';
   root.innerHTML = `
-    <div class="profile-hero">
+    <div class="profile-hero" style="position:relative">
+      <button class="btn ghost" style="position:absolute;top:56px;right:0;padding:9px 18px;font-size:13px" onclick="${state.editing?'saveProfileEdits()':'toggleEdit()'}">${state.editing?'Save changes':'Edit profile'}</button>
       <div class="avatar">${initials}</div>
+      ${state.editing ? `
+      <div style="flex:1;min-width:280px;max-width:520px">
+        <span class="eyebrow"><span class="tick">◆</span>&nbsp;EDITING PROFILE</span>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px">
+          <label class="edit-label">Full name<input class="season-line" id="edit-name" value="${(name).replace(/"/g,'&quot;')}"></label>
+          <label class="edit-label">Email<input class="season-line" id="edit-email" type="email" value="${email.replace(/"/g,'&quot;')}"></label>
+          <label class="edit-label">Online presence<input class="season-line" id="edit-social" type="url" placeholder="https://…" value="${(state.answers[2]||'').replace(/"/g,'&quot;')}"></label>
+          <label class="edit-label">Current city<input class="season-line" id="edit-city" value="${(state.answers[3]||'').replace(/"/g,'&quot;')}"></label>
+          <label class="edit-label">Referred by<input class="season-line" id="edit-referrer" value="${referrer.replace(/"/g,'&quot;')}"></label>
+        </div>
+      </div>` : `
       <div>
-        <span class="eyebrow"><span class="tick">◆</span>&nbsp;MEMBER PROFILE${state.pledge!=null?' · 随喜 $'+Number(state.pledge).toLocaleString()+'/MO (SIGNAL ONLY)':''}</span>
+        <span class="eyebrow"><span class="tick">◆</span>&nbsp;MEMBER PROFILE</span>
         <h2>${name}</h2>
         <div class="whereline eyebrow">CURRENTLY · ${city.toUpperCase()}${birth?' · B. '+new Date(birth+'T00:00:00').getFullYear():''}</div>
-        <div class="btn-row" style="margin-top:18px"><button class="btn ghost" style="padding:9px 18px;font-size:13px" onclick="exportCSV()">Download answers (.csv)</button></div>
-      </div>
+        ${state.answers[2]?`<div style="margin-top:8px;font-size:14px"><a href="${linkHref(state.answers[2])}" target="_blank" rel="noopener" style="color:var(--marigold);text-decoration:none;border-bottom:1px solid var(--marigold)">${esc(state.answers[2])}</a></div>`:''}
+        ${seasonBadge()}
+        <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+          ${state.joinedAt?`<span class="eyebrow">JOINED ${new Date(state.joinedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}).toUpperCase()}</span>`:''}
+          ${referrer?`<span class="eyebrow">·&nbsp; REFERRED BY</span><span style="width:22px;height:22px;border-radius:50%;background:var(--night);color:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:10px;flex-shrink:0">${referrer.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()}</span><span class="eyebrow">${esc(referrer).toUpperCase()}</span>`:''}
+        </div>
+      </div>`}
     </div>
     <div class="section-head"><h2>Life map</h2><div class="rule"></div><span class="eyebrow">FROM BIRTH TO YOUR NEXT CITY</span></div>
     <div class="lifemap-wrap" id="my-lifemap">${renderLifeMap(state.myStints,{birth})}</div>
+    ${birth?'':'<p style="color:var(--ink-soft);font-size:14px;margin:18px 0 14px">Add your birthdate to anchor the timeline from the start of your life.</p>'}
+    <form class="stint-form" onsubmit="setBirth(event)" style="margin:${birth?'18px':'0'} 0 18px">
+      <label>Born<input type="date" id="birth-field" value="${birth||''}" max="2010-12-31"></label>
+      <button class="btn ghost" type="submit">${birth?'Update':'Save'}</button>
+    </form>
     <form class="stint-form" onsubmit="addStint(event)">
       <label>City<span class="ac-wrap"><input type="text" id="st-city" required placeholder="Lisbon" autocomplete="off"><span class="ac-list" id="st-ac" style="display:none"></span></span></label>
       <label>From<input type="date" id="st-start" required value="2026-10-01"></label>
       <label>To<input type="date" id="st-end" required value="2026-11-15"></label>
       <button class="btn ghost" type="submit">Add stint</button>
     </form>
-    <div class="section-head"><h2>How you think, spend time, and move</h2><div class="rule"></div></div>
-    ${answers.length?`<div class="answer-grid">${answers.map(x=>`<div class="answer"><div class="q">${x.Q.q}</div><div class="a">${esc(x.a)}</div></div>`).join('')}</div>`
-      :'<p style="color:var(--ink-soft)">You skipped the written questions — go back through the ritual to fill them in.</p>'}`;
+    <div class="section-head"><h2>A bit about you</h2><div class="rule"></div></div>
+    <div class="freeflow">${answers.map(x=>state.editing
+        ?`<div class="freeflow-item"><div class="q">${x.Q.q}</div><textarea class="edit-field" data-i="${x.i}" style="width:100%;min-height:100px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:var(--gsans);font-size:15px;color:var(--ink);resize:vertical">${x.a}</textarea></div>`
+        :`<div class="freeflow-item"><div class="q">${x.Q.q}</div><div class="a">${esc(x.a)}</div></div>`).join('')}</div>
+
+    ${(()=>{
+      const anyEmpty = PROFILE_QUESTIONS.some((P,pi)=>!(state.extras[pi]||'').trim());
+      return `
+      <div class="section-head" style="margin-top:56px"><div class="rule"></div></div>
+      ${anyEmpty ? '<p style="color:var(--ink-soft);font-size:14.5px;max-width:56ch;font-family:var(--gsans);margin-bottom:20px">We have a few more questions here to get to know you — do fill it out when you have time.</p>' : ''}
+      <div class="freeflow">${PROFILE_QUESTIONS.map((P,pi)=>{
+        const val = (state.extras[pi]||'').trim();
+        // Show an input box when empty, or when the whole profile is in edit mode.
+        if(!val || state.editing){
+          return `<div class="freeflow-item">
+            <div class="q">${P.q}</div>
+            <textarea class="extra-field" data-p="${pi}" style="width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:var(--gsans);font-size:15px;color:var(--ink);resize:vertical" placeholder="~${P.chars} characters, suggested">${state.extras[pi]||''}</textarea>
+          </div>`;
+        }
+        return `<div class="freeflow-item"><div class="q">${P.q}</div><div class="a">${esc(val)}</div></div>`;
+      }).join('')}</div>
+      ${(anyEmpty && !state.editing) ? '<div class="btn-row" style="margin-top:14px"><button class="btn ghost" style="padding:9px 18px;font-size:13px" onclick="saveExtras()">Save answers</button><span class="saved" id="extras-saved" style="align-self:center">✓ SAVED</span></div>' : ''}`;
+    })()}`;
   attachCityAutocomplete(document.getElementById('st-city'), document.getElementById('st-ac'));
+}
+function saveExtras(){
+  document.querySelectorAll('.extra-field').forEach(f=>{ state.extras[Number(f.dataset.p)] = f.value; });
+  saveDraft(state.submitted?'submitted':'draft');
+  renderProfile();
+}
+/* Seasonal scenes: the letter page takes over the whole background */
+const SCENES = {
+  Spring:{bg:'linear-gradient(180deg,#B9CBA8 0%,#D9E3C4 40%,#F2E3DD 75%,#F7D9CE 100%)', ink:'#3D4A33', line:'a window over an orchard, first light'},
+  Summer:{bg:'linear-gradient(180deg,#16302B 0%,#24473E 36%,#5C7248 62%,#D8973F 88%,#EFBE68 100%)', ink:'#F6EFD9', line:'a café at the edge of the jungle, dusk'},
+  Autumn:{bg:'linear-gradient(180deg,#3A3F4A 0%,#6E5A4E 42%,#B0713C 74%,#D9A05B 100%)', ink:'#F3E8D8', line:'a harbor in low gold light'},
+  Winter:{bg:'linear-gradient(180deg,#0F1B2E 0%,#1C2C47 48%,#3B4E6B 80%,#8FA3BF 100%)', ink:'#E8EDF5', line:'a mountain hut, snow against the glass'}
+};
+function applyLetterScene(){
+  const si = seasonInfo(TODAY);
+  const sc = SCENES[si.cur.name] || SCENES.Summer;
+  document.body.style.background = sc.bg;
+  document.body.style.backgroundAttachment = 'fixed';
+  return sc;
+}
+function clearLetterScene(){
+  document.body.style.background = '';
+  document.body.style.backgroundAttachment = '';
+}
+function renderAccountability(){
+  const si = seasonInfo(TODAY);
+  const seasonLabel = si.cur.name.toUpperCase()+' '+si.cur.year+' · UNTIL '+si.fmt(si.cur.end||si.next.start);
+  const root = document.getElementById('accountability-root');
+  const sub = `
+    <div class="subnav" style="margin-top:48px">
+      <button class="${state.seasonView==='accountability'?'on':''}" onclick="state.seasonView='accountability';renderAccountability()">Accountability</button>
+      <button class="${state.seasonView==='letter'?'on':''}" onclick="state.seasonView='letter';renderAccountability()">Letter to friends</button>
+    </div>`;
+
+  if(state.seasonView==='letter'){ renderLetter(root, sub, si, seasonLabel); return; }
+  clearLetterScene();
+  const mm = state.mastermind;
+  root.innerHTML = sub + `
+    <div class="profile-hero" style="padding-top:28px">
+      <div>
+        <span class="eyebrow"><span class="tick">◆</span>&nbsp;${seasonLabel}</span>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,4vw,42px);line-height:1.08;margin-top:10px">Seasonal declaration</h2>
+        <p style="color:var(--ink-soft);max-width:56ch;margin-top:8px">Where are you in life right now? It resets each season — like you.</p>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      ${renderTagDropdown('season-dd', state.season.tags)}
+      <input class="season-line" id="season-other" placeholder="other" style="max-width:420px;display:block;margin-top:14px" value="${(state.season.other||'').replace(/"/g,'&quot;')}">
+      <div class="btn-row" style="margin-top:16px"><button class="btn ghost" style="padding:9px 18px;font-size:13px" onclick="saveSeason()">Save season</button><span class="saved" id="season-saved" style="align-self:center">✓ SAVED</span></div>
+    </div>
+
+    <div class="section-head" style="margin-top:64px"><h2>Accountability mastermind</h2><div class="rule"></div></div>
+    ${mm ? `
+      <p style="font-size:15px"><strong>You're in.</strong> Focus: ${mm.focus&&mm.focus.length?mm.focus.join(', '):'—'}</p>
+      <p style="color:var(--ink-soft);font-size:14.5px;margin-top:8px;max-width:60ch;font-family:var(--gsans)">${esc(mm.hopes||'')}</p>
+      <div class="mm-note" style="max-width:60ch">Expect an email from Coco with coordination and next steps as the cohort comes together.</div>
+      <div class="btn-row" style="margin-top:16px"><button class="btn ghost" style="padding:9px 18px;font-size:13px" onclick="state.mastermind=null;saveDraft(state.submitted?'submitted':'draft');renderAccountability()">Withdraw</button></div>
+    ` : `
+      <p style="font-size:15px;max-width:62ch">We host accountability mastermind sessions, for groups of 4–6 people, matched by season of life. It'll be a weekly call for eight weeks, culminating in person. If interested, fill out the small form below to opt in — and expect an email from Coco with coordination and next steps.</p>
+      <div style="margin-top:22px">
+        <div class="eyebrow" style="margin-bottom:8px">WHAT SEASON ARE YOU IN — OR WISH THE ACCOUNTABILITY FOCUSED AROUND?</div>
+        ${renderTagDropdown('mm-dd', [])}
+        <div class="eyebrow" style="margin:20px 0 6px">WHAT DO YOU HOPE TO GET OUT OF IT?</div>
+        <textarea class="season-line" id="mm-hopes" style="min-height:80px;resize:vertical;max-width:560px;display:block" placeholder="A sentence or two."></textarea>
+      </div>
+      <div class="btn-row" style="margin-top:20px"><button class="btn" onclick="joinMastermind()">Opt in</button></div>
+    `}`;
+}
+function renderLetter(root, sub, si, seasonLabel){
+  const sc = applyLetterScene();
+  const L = state.letter;
+  const recipients = state.letterRecipients;
+  root.innerHTML = sub + `
+    <div style="max-width:760px;margin:36px auto 0;text-align:center">
+      <span class="eyebrow" style="color:${sc.ink};opacity:.85">${seasonLabel} · ${sc.line.toUpperCase()}</span>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.6vw,40px);line-height:1.1;margin-top:12px;color:${sc.ink}">A letter to your friends</h2>
+      <p style="color:${sc.ink};opacity:.85;margin-top:10px;font-size:15.5px">Find some quiet time. Grab a coffee or tea.</p>
+    </div>
+    <div class="letter-card">
+      <input class="letter-title" id="letter-title" placeholder="Dear friends," value="${(L.title||'').replace(/"/g,'&quot;')}">
+      <textarea class="letter-body" id="letter-body" placeholder="How are you, really?
+
+Start with some of the wins, the positives, the grateful. But also — what were the challenges, and what did they teach you? Think back on the last season, about four months. You'd realize a lot has changed, even if you haven't noticed it happening.
+
+These are the things your friends actually want to know.
+
+End with a small good thing: one specific, ordinary moment of joy.">${L.text||''}</textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><span class="saved" id="letter-saved">✓ DRAFT SAVED</span><span class="eyebrow" id="letter-count"></span></div>
+    </div>
+
+    <div class="letter-card" style="padding:32px 40px">
+      <div class="eyebrow" style="margin-bottom:4px"><span class="tick">◆</span>&nbsp;SEND TO</div>
+      <p style="color:var(--ink-soft);font-size:13.5px;font-family:var(--gsans);margin-bottom:14px">Your address book — saved once, ready every season. Friends don't need a Solei account; the letter arrives as a simple email.</p>
+      <div id="ab-list">${state.addressBook.map((c,i)=>`
+        <label class="ab-row"><input type="checkbox" ${recipients.includes(c.email)?'checked':''} data-email="${esc(c.email)}" onchange="toggleRecipient(this.dataset.email)"><span><strong>${esc(c.name)}</strong> · <span style="color:var(--ink-soft)">${esc(c.email)}</span></span><button class="ab-del" onclick="removeContact(${i});event.preventDefault()" title="Remove">×</button></label>`).join('')||'<p style="color:var(--ink-soft);font-size:14px;font-family:var(--gsans)">No one yet — add your first friend below.</p>'}</div>
+      <form class="stint-form" style="margin-top:16px" onsubmit="addContact(event)">
+        <label>Full name<input type="text" id="ab-name" required placeholder="Mei Lin"></label>
+        <label>Email<input type="email" id="ab-email" required placeholder="mei@example.com"></label>
+        <button class="btn ghost" type="submit">Add friend</button>
+      </form>
+      <label class="ab-row" style="margin-top:22px;border-top:1px solid var(--line);padding-top:18px">
+        <input type="checkbox" ${L.sharedToSolei?'checked':''} onchange="state.letter.sharedToSolei=this.checked">
+        <span><strong>Also share to the Solei reading room</strong> · <span style="color:var(--ink-soft)">visible to members only, never public</span></span>
+      </label>
+      <div class="btn-row" style="margin-top:20px">
+        <button class="btn" onclick="sendLetter()">Send letter</button>
+        ${L.sentAt?`<span class="eyebrow" style="align-self:center">LAST SENT ${new Date(L.sentAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase()} · ${L.sentTo.length} ${L.sentTo.length===1?'FRIEND':'FRIENDS'}</span>`:''}
+      </div>
+    </div>`;
+  // draft autosave
+  const body = document.getElementById('letter-body');
+  const title = document.getElementById('letter-title');
+  const count = document.getElementById('letter-count');
+  const updateCount = ()=>{ count.textContent = body.value.length ? body.value.length+' CHARACTERS' : ''; };
+  updateCount();
+  let t;
+  const onEdit = ()=>{
+    state.letter.text = body.value;
+    state.letter.title = title.value;
+    updateCount();
+    clearTimeout(t);
+    t = setTimeout(async ()=>{
+      state.letter.season = si.cur.name+' '+si.cur.year;
+      const ok = await saveDraft(state.submitted?'submitted':'draft');
+      const tick = document.getElementById('letter-saved');
+      if(tick && ok){ tick.classList.add('show'); setTimeout(()=>tick.classList.remove('show'),1600); }
+    },900);
+  };
+  body.addEventListener('input', onEdit);
+  title.addEventListener('input', onEdit);
+}
+function addContact(e){
+  e.preventDefault();
+  const name = document.getElementById('ab-name').value.trim();
+  const email = document.getElementById('ab-email').value.trim().toLowerCase();
+  if(!name||!email) return;
+  if(!state.addressBook.some(c=>c.email===email)){
+    state.addressBook.push({name,email});
+    state.letterRecipients.push(email);
+    saveDraft(state.submitted?'submitted':'draft');
+  }
+  renderAccountability();
+}
+function removeContact(i){
+  const email = state.addressBook[i].email;
+  state.addressBook.splice(i,1);
+  state.letterRecipients = state.letterRecipients.filter(x=>x!==email);
+  saveDraft(state.submitted?'submitted':'draft');
+  renderAccountability();
+}
+function toggleRecipient(email){
+  const i = state.letterRecipients.indexOf(email);
+  if(i>=0) state.letterRecipients.splice(i,1); else state.letterRecipients.push(email);
+}
+function sendLetter(){
+  const L = state.letter;
+  if(!(L.text||'').trim()){ document.getElementById('letter-body').focus(); return; }
+  if(state.letterRecipients.length===0 && !L.sharedToSolei){
+    alert('Choose at least one friend, or share to the Solei reading room.');
+    return;
+  }
+  L.sentTo = [...state.letterRecipients];
+  L.sentAt = new Date().toISOString();
+  saveDraft(state.submitted?'submitted':'draft');
+  alert('Prototype — in production this delivers your letter by email (via a service like Resend) to: '+(L.sentTo.join(', ')||'no one')+(L.sharedToSolei?'\n…and places it in the Solei reading room.':''));
+  renderAccountability();
+}
+function renderTagDropdown(id, selected){
+  return `<div class="dd-wrap">
+    <button type="button" class="dd-btn" onclick="toggleDD('${id}')">Select seasons <span style="font-size:10px">▾</span></button>
+    <div class="dd-panel" id="${id}">
+      ${SEASON_TAGS.map(t=>`<button type="button" class="dd-row ${selected.includes(t)?'on':''}" data-t="${t}" onclick="this.classList.toggle('on');updateDDChips('${id}')"><span class="dd-check">✓</span>${t}</button>`).join('')}
+    </div>
+    <div class="chip-row" id="${id}-chips" style="margin-top:12px">${selected.map(t=>`<span class="tag-chip on" style="cursor:default">${t}</span>`).join('')}</div>
+  </div>`;
+}
+function toggleDD(id){
+  const p = document.getElementById(id);
+  const wasOpen = p.classList.contains('open');
+  document.querySelectorAll('.dd-panel.open').forEach(x=>x.classList.remove('open'));
+  if(!wasOpen) p.classList.add('open');
+}
+function updateDDChips(id){
+  const tags = [...document.querySelectorAll('#'+id+' .dd-row.on')].map(b=>b.dataset.t);
+  document.getElementById(id+'-chips').innerHTML = tags.map(t=>`<span class="tag-chip on" style="cursor:default">${t}</span>`).join('');
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.dd-wrap')) document.querySelectorAll('.dd-panel.open').forEach(x=>x.classList.remove('open'));
+});
+function saveSeason(){
+  state.season.tags = [...document.querySelectorAll('#season-dd .dd-row.on')].map(b=>b.dataset.t);
+  state.season.other = (document.getElementById('season-other').value||'').trim();
+  const si = seasonInfo(TODAY);
+  state.season.season = si.cur.name+' '+si.cur.year;
+  saveDraft(state.submitted?'submitted':'draft');
+  const tick = document.getElementById('season-saved');
+  if(tick){ tick.classList.add('show'); setTimeout(()=>tick.classList.remove('show'),1600); }
+}
+function joinMastermind(){
+  const focus = [...document.querySelectorAll('#mm-dd .dd-row.on')].map(b=>b.dataset.t);
+  state.mastermind = {
+    optIn: true,
+    focus,
+    hopes: (document.getElementById('mm-hopes').value||'').trim(),
+    joinedAt: new Date().toISOString()
+  };
+  saveDraft(state.submitted?'submitted':'draft');
+  renderAccountability();
+}
+function toggleEdit(){ state.editing = true; renderProfile(); }
+function saveProfileEdits(){
+  const nameF = document.getElementById('edit-name');
+  if(nameF){
+    state.answers[0] = nameF.value;
+    state.answers[1] = document.getElementById('edit-email').value;
+    state.answers[2] = document.getElementById('edit-social').value;
+    state.answers[3] = document.getElementById('edit-city').value;
+    state.answers[7] = document.getElementById('edit-referrer').value;
+  }
+  document.querySelectorAll('.edit-field').forEach(f=>{ state.answers[Number(f.dataset.i)] = f.value; });
+  document.querySelectorAll('.extra-field').forEach(f=>{ state.extras[Number(f.dataset.p)] = f.value; });
+  state.editing = false;
+  saveDraft('submitted');
+  renderProfile();
+}
+function setBirth(e){
+  e.preventDefault();
+  const v = document.getElementById('birth-field').value;
+  if(!v) return;
+  state.birth = v;
+  saveDraft(state.submitted?'submitted':'draft');
+  renderProfile();
 }
 function addStint(e){
   e.preventDefault();
@@ -696,24 +1077,10 @@ function addStint(e){
   if(!city||!start||!end||start>end) return;
   state.myStints.push({city,start,end});
   saveDraft(state.submitted?'submitted':'draft');
-  document.getElementById('my-lifemap').innerHTML = renderLifeMap(state.myStints,{birth:state.answers[2]||null});
+  document.getElementById('my-lifemap').innerHTML = renderLifeMap(state.myStints,{birth:state.birth});
   document.getElementById('st-city').value='';
 }
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function exportCSV(){
-  // Same shape as the production admissions spreadsheet: one row per applicant, one column per question
-  const q = s=>'"'+String(s??'').replace(/"/g,'""')+'"';
-  const headers = [...QUESTIONS.map(Q=>Q.q), '随喜 signal ($/mo)', 'Life map stints'];
-  const row = [...QUESTIONS.map((Q,i)=>state.answers[i]||''), state.pledge??'',
-    state.myStints.map(s=>`${s.city} ${s.start}→${s.end}`).join('; ')];
-  const csv = headers.map(q).join(',')+'\n'+row.map(q).join(',');
-  const blob = new Blob([csv], {type:'text/csv'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'solei-application.csv';
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
 
 /* ---------- world map ---------- */
 let mapDate = '2026-07-11';
