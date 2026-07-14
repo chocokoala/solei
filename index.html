@@ -391,8 +391,21 @@ async function saveDraft(status){
     stints: state.myStints,
     updated_at: new Date().toISOString()
   };
-  const {error} = await sb.from('applications').upsert(payload);
-  if(error){ console.error('Supabase save failed:', error.message); return false; }
+  const {error} = state.rowCreated
+    ? await sb.from('applications').update(payload).eq('id', state.appId)
+    : await sb.from('applications').insert(payload);
+  if(error){
+    // If the row already exists (e.g. after a page reload), fall back to update once
+    if(!state.rowCreated && error.code === '23505'){
+      state.rowCreated = true;
+      const {error: e2} = await sb.from('applications').update(payload).eq('id', state.appId);
+      if(e2){ console.error('Supabase save failed:', e2.message); return false; }
+      return true;
+    }
+    console.error('Supabase save failed:', error.message);
+    return false;
+  }
+  state.rowCreated = true;
   return true;
 }
 
@@ -526,7 +539,7 @@ const EVENTS = [
 ];
 
 /* ---------- state ---------- */
-const state = {answers:{}, extras:{}, pledge:null, pledgePeriod:'month', submitted:false, myStints:[], obIndex:0, appId:null, birth:null, editing:false, joinedAt:null, season:{tags:[],other:''}, mastermind:null, extraEditing:{}, seasonView:'accountability', letter:{title:'',text:'',sharedToSolei:false,sentTo:[],sentAt:null}, addressBook:[], letterRecipients:[]};
+const state = {rowCreated:false, answers:{}, extras:{}, pledge:null, pledgePeriod:'month', submitted:false, myStints:[], obIndex:0, appId:null, birth:null, editing:false, joinedAt:null, season:{tags:[],other:''}, mastermind:null, extraEditing:{}, seasonView:'accountability', letter:{title:'',text:'',sharedToSolei:false,sentTo:[],sentAt:null}, addressBook:[], letterRecipients:[]};
 let curView = 'welcome', lastView = 'members';
 
 /* ---------- routing ---------- */
