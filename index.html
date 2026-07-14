@@ -392,13 +392,13 @@ async function saveDraft(status){
     updated_at: new Date().toISOString()
   };
   const {error} = state.rowCreated
-    ? await sb.from('applications').update(payload).eq('id', state.appId)
-    : await sb.from('applications').insert(payload);
+    ? await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId)
+    : await sb.from('applications').insert(payload, {returning:'minimal'});
   if(error){
     // If the row already exists (e.g. after a page reload), fall back to update once
     if(!state.rowCreated && error.code === '23505'){
       state.rowCreated = true;
-      const {error: e2} = await sb.from('applications').update(payload).eq('id', state.appId);
+      const {error: e2} = await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId);
       if(e2){ console.error('Supabase save failed:', e2.message); return false; }
       return true;
     }
@@ -1224,7 +1224,7 @@ function sendIntro(name){
   if(sb){ sb.from('intro_requests').insert({
     to_member: name, message: msg,
     from_name: state.answers[0]||null, from_email: state.answers[1]||null
-  }).then(({error})=>{ if(error) console.error('Intro request failed:', error.message); }); }
+  }, {returning:'minimal'}).then(({error})=>{ if(error) console.error('Intro request failed:', error.message); }); }
   document.getElementById('intro-body').innerHTML = `
     <span class="eyebrow"><span class="tick">◆</span>&nbsp;SENT</span>
     <h2 style="font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.15;margin-top:8px">On its way to Coco.</h2>
