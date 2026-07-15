@@ -370,8 +370,16 @@ const SUPABASE_ANON_KEY = 'sb_publishable_ASFbRsZJ2CrVKaf7n62Ylg_ywn0rOzV';
 const sb = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
-async function saveDraft(status){
-  if(!sb) return true; // demo mode
+/* All saves run one-at-a-time. Without this, two autosaves can race:
+   both see "row not created yet", both INSERT, and the second gets a
+   duplicate-key error. */
+let saveQueue = Promise.resolve(true);
+function saveDraft(status){
+  if(!sb) return Promise.resolve(true); // demo mode
+  saveQueue = saveQueue.then(()=>doSave(status), ()=>doSave(status));
+  return saveQueue;
+}
+async function doSave(status){
   const payload = {
     id: state.appId,
     status: status || 'draft',
@@ -391,21 +399,16 @@ async function saveDraft(status){
     stints: state.myStints,
     updated_at: new Date().toISOString()
   };
-  const {error} = state.rowCreated
-    ? await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId)
-    : await sb.from('applications').insert(payload, {returning:'minimal'});
-  if(error){
-    // If the row already exists (e.g. after a page reload), fall back to update once
-    if(!state.rowCreated && error.code === '23505'){
-      state.rowCreated = true;
-      const {error: e2} = await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId);
-      if(e2){ console.error('Supabase save failed:', e2.message); return false; }
-      return true;
-    }
-    console.error('Supabase save failed:', error.message);
-    return false;
+  // First save creates the row; every save after updates it.
+  if(!state.rowCreated){
+    const {error} = await sb.from('applications').insert(payload, {returning:'minimal'});
+    if(!error){ state.rowCreated = true; return true; }
+    const isDuplicate = error.code === '23505' || /duplicate key/i.test(error.message || '');
+    if(!isDuplicate){ console.error('Supabase save failed:', error.message); return false; }
+    state.rowCreated = true; // row already exists — fall through to update
   }
-  state.rowCreated = true;
+  const {error} = await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId);
+  if(error){ console.error('Supabase save failed:', error.message); return false; }
   return true;
 }
 
