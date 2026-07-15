@@ -401,13 +401,18 @@ async function doSave(status){
   };
   // First save creates the row; every save after updates it.
   if(!state.rowCreated){
-    const {error} = await sb.from('applications').insert(payload, {returning:'minimal'});
+    const {error} = await sb.from('applications').insert(payload);
+    console.log('SOLEI insert', {id:payload.id, name:payload.full_name, error: error && error.message});
     if(!error){ state.rowCreated = true; return true; }
     const isDuplicate = error.code === '23505' || /duplicate key/i.test(error.message || '');
     if(!isDuplicate){ console.error('Supabase save failed:', error.message); return false; }
     state.rowCreated = true; // row already exists — fall through to update
   }
-  const {error} = await sb.from('applications').update(payload, {returning:'minimal'}).eq('id', state.appId);
+  const {error} = await sb.from('applications').update(payload).eq('id', state.appId);
+  console.log('SOLEI update', {id:payload.id, status:payload.status, name:payload.full_name,
+    email:payload.email, city:payload.current_city, referred:payload.referred_by,
+    pledge:payload.pledge, answerCount:Object.keys(payload.answers||{}).length,
+    error: error && error.message});
   if(error){ console.error('Supabase save failed:', error.message); return false; }
   return true;
 }
