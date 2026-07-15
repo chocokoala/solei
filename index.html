@@ -402,17 +402,19 @@ async function doSave(status){
   // First save creates the row; every save after updates it.
   if(!state.rowCreated){
     const {error} = await sb.from('applications').insert(payload);
-    console.log('SOLEI insert', {id:payload.id, name:payload.full_name, error: error && error.message});
+    console.log('SOLEI insert | id=' + payload.id + ' | name=' + JSON.stringify(payload.full_name) +
+      ' | err=' + (error ? error.message : 'none'));
     if(!error){ state.rowCreated = true; return true; }
     const isDuplicate = error.code === '23505' || /duplicate key/i.test(error.message || '');
     if(!isDuplicate){ console.error('Supabase save failed:', error.message); return false; }
     state.rowCreated = true; // row already exists — fall through to update
   }
   const {error} = await sb.from('applications').update(payload).eq('id', state.appId);
-  console.log('SOLEI update', {id:payload.id, status:payload.status, name:payload.full_name,
-    email:payload.email, city:payload.current_city, referred:payload.referred_by,
-    pledge:payload.pledge, answerCount:Object.keys(payload.answers||{}).length,
-    error: error && error.message});
+  console.log('SOLEI update | id=' + payload.id + ' | status=' + payload.status +
+    ' | name=' + JSON.stringify(payload.full_name) + ' | email=' + JSON.stringify(payload.email) +
+    ' | city=' + JSON.stringify(payload.current_city) + ' | referred=' + JSON.stringify(payload.referred_by) +
+    ' | pledge=' + payload.pledge + ' | answers=' + JSON.stringify(payload.answers) +
+    ' | err=' + (error ? error.message : 'none'));
   if(error){ console.error('Supabase save failed:', error.message); return false; }
   return true;
 }
